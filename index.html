@@ -70,6 +70,34 @@ h1{
   onkeyup="searchTable()"
   style="width:300px;padding:8px;margin-top:15px;">
 
+<div id="dashboard" style="
+display:flex;
+gap:20px;
+margin:20px 0;
+">
+
+  <div style="
+  background:#2196f3;
+  color:white;
+  padding:20px;
+  border-radius:10px;
+  min-width:200px;">
+    <h3>📦 รายการทั้งหมด</h3>
+    <h2 id="totalRows">0</h2>
+  </div>
+
+  <div style="
+  background:#4caf50;
+  color:white;
+  padding:20px;
+  border-radius:10px;
+  min-width:200px;">
+    <h3>📊 จำนวนเบิกทั้งหมด</h3>
+    <h2 id="totalQty">0</h2>
+  </div>
+
+</div>
+  
 <table id="stockTable">
   <thead></thead>
   <tbody></tbody>
