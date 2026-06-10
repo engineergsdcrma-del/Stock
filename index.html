@@ -2,37 +2,62 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>ระบบสต๊อกสินค้า</title>
 
 <style>
+
 body{
-    font-family: Arial, sans-serif;
-    margin:20px;
+font-family:Arial;
+margin:20px;
 }
+
+input{
+padding:8px;
+margin:5px;
+}
+
+button{
+padding:8px 15px;
+cursor:pointer;
+}
+
 table{
-    width:100%;
-    border-collapse:collapse;
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
 }
+
 th,td{
-    border:1px solid #ccc;
-    padding:8px;
+border:1px solid #ddd;
+padding:8px;
 }
+
 th{
-    background:#f0f0f0;
+background:#2196f3;
+color:white;
 }
-h1{
-    color:#0066cc;
-}
+
 </style>
 
 </head>
+
 <body>
 
 <h1>📦 ระบบสต๊อกสินค้า</h1>
 
-<button onclick="loadData()">โหลดข้อมูล</button>
+<h3>เพิ่มสินค้า</h3>
 
-<br><br>
+<input id="code" placeholder="รหัสสินค้า">
+<input id="name" placeholder="ชื่อสินค้า">
+<input id="qty" placeholder="จำนวน">
+<input id="unit" placeholder="หน่วย">
+<input id="user" placeholder="ผู้เบิก">
+<input id="place" placeholder="นำไปใช้ที่ไหน">
+
+<button onclick="saveData()">
+บันทึก
+</button>
 
 <table id="stockTable">
 <thead></thead>
@@ -41,38 +66,63 @@ h1{
 
 <script>
 
-const api =
+const API =
 "https://script.google.com/macros/s/AKfycbw8Op1Qw9h6hLkJojuODWzmdjNX2eDulTIDQBmhtU27GhK-s06dClUtA0ro0gHyu2cE/exec";
 
 async function loadData(){
 
-const response = await fetch(api);
+const response = await fetch(API);
 const data = await response.json();
 
-const headers = data[0];
+let head="<tr>";
 
-let thead = "<tr>";
-headers.forEach(h=>{
-thead += `<th>${h}</th>`;
+data[0].forEach(col=>{
+head += `<th>${col}</th>`;
 });
-thead += "</tr>";
 
-document.querySelector("#stockTable thead").innerHTML = thead;
+head+="</tr>";
 
-let rows = "";
+document.querySelector("thead").innerHTML=head;
+
+let rows="";
 
 for(let i=1;i<data.length;i++){
 
-rows += "<tr>";
+rows+="<tr>";
 
 data[i].forEach(col=>{
 rows += `<td>${col}</td>`;
 });
 
-rows += "</tr>";
+rows+="</tr>";
 }
 
-document.querySelector("#stockTable tbody").innerHTML = rows;
+document.querySelector("tbody").innerHTML=rows;
+
+}
+
+async function saveData(){
+
+const bodyData = {
+
+code:document.getElementById("code").value,
+name:document.getElementById("name").value,
+qty:document.getElementById("qty").value,
+unit:document.getElementById("unit").value,
+user:document.getElementById("user").value,
+place:document.getElementById("place").value
+
+};
+
+await fetch(API,{
+method:"POST",
+body:JSON.stringify(bodyData)
+});
+
+alert("บันทึกสำเร็จ");
+
+loadData();
+
 }
 
 loadData();
