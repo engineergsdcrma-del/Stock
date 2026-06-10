@@ -250,6 +250,31 @@ async function saveData(){
 // เริ่มต้นระบบ
 // ========================
 
+function searchTable(){
+
+  let keyword =
+  document.getElementById("search")
+  .value
+  .toLowerCase();
+
+  let rows =
+  document.querySelectorAll("#stockTable tbody tr");
+
+  rows.forEach(row=>{
+
+    let text =
+    row.innerText.toLowerCase();
+
+    if(text.includes(keyword)){
+      row.style.display = "";
+    }else{
+      row.style.display = "none";
+    }
+
+  });
+
+}
+  
 loadProducts();
 loadData();
 
