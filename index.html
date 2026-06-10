@@ -176,6 +176,9 @@ async function loadData(){
   const data =
   await response.json();
 
+  let totalRows = data.length - 1;
+  let totalQty = 0;
+
   let head = "<tr>";
 
   data[0].forEach(col=>{
@@ -193,6 +196,10 @@ async function loadData(){
 
   for(let i=1;i<data.length;i++){
 
+    totalQty += Number(data[i][5]) || 0;
+
+  rows += "<tr>";
+
     rows += "<tr>";
 
     data[i].forEach(col=>{
@@ -206,6 +213,12 @@ async function loadData(){
 
   document.querySelector("tbody").innerHTML =
   rows;
+
+  document.getElementById("totalRows").innerText =
+totalRows;
+
+document.getElementById("totalQty").innerText =
+totalQty;
 }
 
 
