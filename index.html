@@ -104,24 +104,25 @@ document.querySelector("tbody").innerHTML=rows;
 async function saveData(){
 
 const bodyData = {
-
-code:document.getElementById("code").value,
-name:document.getElementById("name").value,
-qty:document.getElementById("qty").value,
-unit:document.getElementById("unit").value,
-user:document.getElementById("user").value,
-place:document.getElementById("place").value
-
+  code: document.getElementById("code").value,
+  name: document.getElementById("name").value,
+  qty: document.getElementById("qty").value,
+  unit: document.getElementById("unit").value,
+  user: document.getElementById("user").value,
+  place: document.getElementById("place").value
 };
 
 await fetch(API,{
-method:"POST",
-body:JSON.stringify(bodyData)
+  method:"POST",
+  mode:"no-cors",
+  body:JSON.stringify(bodyData)
 });
 
 alert("บันทึกสำเร็จ");
 
-loadData();
+setTimeout(loadData,1000);
+
+
 
 }
 
