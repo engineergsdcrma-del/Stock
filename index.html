@@ -2,40 +2,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
 <title>ระบบสต๊อกสินค้า</title>
 
 <style>
 
 body{
-font-family:Arial;
-margin:20px;
+  font-family:Arial;
+  margin:20px;
 }
 
-input{
-padding:8px;
-margin:5px;
+input,select{
+  padding:8px;
+  margin:5px;
 }
 
 button{
-padding:8px 15px;
-cursor:pointer;
+  padding:8px 15px;
+  cursor:pointer;
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
 }
 
 th,td{
-border:1px solid #ddd;
-padding:8px;
+  border:1px solid #ddd;
+  padding:8px;
 }
 
 th{
-background:#2196f3;
-color:white;
+  background:#2196f3;
+  color:white;
 }
 
 </style>
@@ -46,22 +45,32 @@ color:white;
 
 <h1>📦 ระบบสต๊อกสินค้า</h1>
 
-<h3>เพิ่มสินค้า</h3>
+<h3>เพิ่มรายการเบิก</h3>
 
-<select id="code">
-  <option value="">-- เลือกรหัสสินค้า --</option>
+<select id="code" onchange="selectProduct()">
+<option value="">-- เลือกรหัสสินค้า --</option>
 </select>
+
+<input id="name" placeholder="ชื่อสินค้า" readonly>
+
+<input id="unit" placeholder="หน่วย" readonly>
+
 <input id="qty" placeholder="จำนวน">
+
 <input id="user" placeholder="ผู้เบิก">
+
 <input id="place" placeholder="นำไปใช้ที่ไหน">
 
 <button onclick="saveData()">
 บันทึก
 </button>
 
-<table id="stockTable">
+<table>
+
 <thead></thead>
+
 <tbody></tbody>
+
 </table>
 
 <script>
@@ -69,63 +78,136 @@ color:white;
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
-async function loadData(){
+let products = [];
 
-const response = await fetch(API);
-const data = await response.json();
+async function loadProducts(){
 
-let head="<tr>";
+  const response =
+    await fetch(API + "?type=products");
 
-data[0].forEach(col=>{
-head += `<th>${col}</th>`;
-});
+  const data =
+    await response.json();
 
-head+="</tr>";
+  products = [];
 
-document.querySelector("thead").innerHTML=head;
+  const select =
+    document.getElementById("code");
 
-let rows="";
+  select.innerHTML =
+    '<option value="">-- เลือกรหัสสินค้า --</option>';
 
-for(let i=1;i<data.length;i++){
+  for(let i=1;i<data.length;i++){
 
-rows+="<tr>";
+    products.push({
+      code:data[i][0],
+      name:data[i][1],
+      unit:data[i][2]
+    });
 
-data[i].forEach(col=>{
-rows += `<td>${col}</td>`;
-});
+    select.innerHTML +=
+      `<option value="${data[i][0]}">
+        ${data[i][0]} - ${data[i][1]}
+      </option>`;
+  }
 
-rows+="</tr>";
 }
 
-document.querySelector("tbody").innerHTML=rows;
+function selectProduct(){
+
+  const code =
+    document.getElementById("code").value;
+
+  const product =
+    products.find(
+      p => p.code == code
+    );
+
+  if(product){
+
+    document.getElementById("name").value =
+      product.name;
+
+    document.getElementById("unit").value =
+      product.unit;
+
+  }
+
+}
+
+async function loadData(){
+
+  const response =
+    await fetch(API);
+
+  const data =
+    await response.json();
+
+  let head = "<tr>";
+
+  data[0].forEach(col=>{
+    head += `<th>${col}</th>`;
+  });
+
+  head += "</tr>";
+
+  document.querySelector("thead").innerHTML =
+    head;
+
+  let rows = "";
+
+  for(let i=1;i<data.length;i++){
+
+    rows += "<tr>";
+
+    data[i].forEach(col=>{
+      rows += `<td>${col}</td>`;
+    });
+
+    rows += "</tr>";
+  }
+
+  document.querySelector("tbody").innerHTML =
+    rows;
 
 }
 
 async function saveData(){
 
-const bodyData = {
-  code: document.getElementById("code").value,
-  name: document.getElementById("name").value,
-  qty: document.getElementById("qty").value,
-  unit: document.getElementById("unit").value,
-  user: document.getElementById("user").value,
-  place: document.getElementById("place").value
-};
+  const bodyData = {
 
-await fetch(API,{
-  method:"POST",
-  mode:"no-cors",
-  body:JSON.stringify(bodyData)
-});
+    code:
+      document.getElementById("code").value,
 
-alert("บันทึกสำเร็จ");
+    name:
+      document.getElementById("name").value,
 
-setTimeout(loadData,1000);
+    qty:
+      document.getElementById("qty").value,
 
+    unit:
+      document.getElementById("unit").value,
 
+    user:
+      document.getElementById("user").value,
+
+    place:
+      document.getElementById("place").value
+
+  };
+
+  await fetch(API,{
+    method:"POST",
+    mode:"no-cors",
+    body:JSON.stringify(bodyData)
+  });
+
+  alert("บันทึกสำเร็จ");
+
+  setTimeout(loadData,1000);
 
 }
 
+loadProducts();
 loadData();
 
 </script>
