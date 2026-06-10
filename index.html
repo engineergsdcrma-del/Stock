@@ -198,6 +198,9 @@ async function loadData(){
 
     totalQty += Number(data[i][5]) || 0;
 
+    console.log(data[i][5]);
+    console.log(totalQty);
+
     rows += "<tr>";
 
     data[i].forEach(col=>{
