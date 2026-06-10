@@ -5,7 +5,6 @@
 <title>ระบบสต๊อกสินค้า</title>
 
 <style>
-
 body{
   font-family:Arial;
   margin:20px;
@@ -18,7 +17,6 @@ input,select{
 
 button{
   padding:8px 15px;
-  cursor:pointer;
 }
 
 table{
@@ -36,20 +34,16 @@ th{
   background:#2196f3;
   color:white;
 }
-
 </style>
 
 </head>
-
 <body>
 
 <h1>📦 ระบบสต๊อกสินค้า</h1>
 
 <h3>เพิ่มรายการเบิก</h3>
 
-<select id="code" onchange="selectProduct()">
-<option value="">-- เลือกรหัสสินค้า --</option>
-</select>
+<select id="code"></select>
 
 <input id="name" placeholder="ชื่อสินค้า" readonly>
 
@@ -65,12 +59,9 @@ th{
 บันทึก
 </button>
 
-<table>
-
+<table id="stockTable">
 <thead></thead>
-
 <tbody></tbody>
-
 </table>
 
 <script>
@@ -78,134 +69,127 @@ th{
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
-let products = [];
 
+// โหลดสินค้า
 async function loadProducts(){
 
-  const response =
-    await fetch(API + "?type=products");
+  const res =
+  await fetch(API + "?type=products");
 
   const data =
-    await response.json();
-
-  products = [];
+  await res.json();
 
   const select =
-    document.getElementById("code");
+  document.getElementById("code");
 
   select.innerHTML =
-    '<option value="">-- เลือกรหัสสินค้า --</option>';
+  '<option value="">-- เลือกรหัสสินค้า --</option>';
 
   for(let i=1;i<data.length;i++){
 
-    products.push({
-      code:data[i][0],
-      name:data[i][1],
-      unit:data[i][2]
-    });
-
     select.innerHTML +=
-      `<option value="${data[i][0]}">
-        ${data[i][0]} - ${data[i][1]}
-      </option>`;
+    `<option
+      value="${data[i][0]}"
+      data-name="${data[i][1]}"
+      data-unit="${data[i][2]}"
+    >
+      ${data[i][0]}
+    </option>`;
   }
-
 }
 
-function selectProduct(){
 
-  const code =
-    document.getElementById("code").value;
+// เลือกรหัสแล้วเติมข้อมูล
+document.addEventListener("change",function(e){
 
-  const product =
-    products.find(
-      p => p.code == code
-    );
+  if(e.target.id=="code"){
 
-  if(product){
+    const op =
+    e.target.options[e.target.selectedIndex];
 
     document.getElementById("name").value =
-      product.name;
+    op.dataset.name || "";
 
     document.getElementById("unit").value =
-      product.unit;
-
+    op.dataset.unit || "";
   }
 
-}
+});
 
+
+// โหลดตาราง
 async function loadData(){
 
   const response =
-    await fetch(API);
+  await fetch(API);
 
   const data =
-    await response.json();
+  await response.json();
 
-  let head = "<tr>";
+  let head="<tr>";
 
   data[0].forEach(col=>{
     head += `<th>${col}</th>`;
   });
 
-  head += "</tr>";
+  head+="</tr>";
 
-  document.querySelector("thead").innerHTML =
-    head;
+  document.querySelector("thead").innerHTML=head;
 
-  let rows = "";
+  let rows="";
 
   for(let i=1;i<data.length;i++){
 
-    rows += "<tr>";
+    rows+="<tr>";
 
     data[i].forEach(col=>{
       rows += `<td>${col}</td>`;
     });
 
-    rows += "</tr>";
+    rows+="</tr>";
   }
 
-  document.querySelector("tbody").innerHTML =
-    rows;
-
+  document.querySelector("tbody").innerHTML=rows;
 }
 
+
+// บันทึก
 async function saveData(){
 
   const bodyData = {
 
     code:
-      document.getElementById("code").value,
-
-    name:
-      document.getElementById("name").value,
+    document.getElementById("code").value,
 
     qty:
-      document.getElementById("qty").value,
-
-    unit:
-      document.getElementById("unit").value,
+    document.getElementById("qty").value,
 
     user:
-      document.getElementById("user").value,
+    document.getElementById("user").value,
 
     place:
-      document.getElementById("place").value
-
+    document.getElementById("place").value
   };
 
   await fetch(API,{
+
     method:"POST",
+
     mode:"no-cors",
+
     body:JSON.stringify(bodyData)
+
   });
 
   alert("บันทึกสำเร็จ");
 
-  setTimeout(loadData,1000);
+  setTimeout(()=>{
 
+    loadData();
+
+  },1000);
 }
+
 
 loadProducts();
 loadData();
