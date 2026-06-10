@@ -63,6 +63,13 @@ h1{
 
 <button onclick="saveData()">บันทึก</button>
 
+<input
+  type="text"
+  id="search"
+  placeholder="🔍 ค้นหารหัสสินค้า, ชื่อสินค้า, ผู้เบิก"
+  onkeyup="searchTable()"
+  style="width:300px;padding:8px;margin-top:15px;">
+
 <table id="stockTable">
   <thead></thead>
   <tbody></tbody>
