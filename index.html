@@ -2,13 +2,82 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>คลังสินค้า</title>
+<title>ระบบสต๊อกสินค้า</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin:20px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+}
+th{
+    background:#f0f0f0;
+}
+h1{
+    color:#0066cc;
+}
+</style>
+
 </head>
 <body>
 
-<h1>ระบบคลังสินค้า</h1>
+<h1>📦 ระบบสต๊อกสินค้า</h1>
 
-<p>เว็บไซต์ทำงานสำเร็จ 🎉</p>
+<button onclick="loadData()">โหลดข้อมูล</button>
+
+<br><br>
+
+<table id="stockTable">
+<thead></thead>
+<tbody></tbody>
+</table>
+
+<script>
+
+const api =
+"https://script.google.com/macros/s/AKfycbw8Op1Qw9h6hLkJojuODWzmdjNX2eDulTIDQBmhtU27GhK-s06dClUtA0ro0gHyu2cE/exec";
+
+async function loadData(){
+
+const response = await fetch(api);
+const data = await response.json();
+
+const headers = data[0];
+
+let thead = "<tr>";
+headers.forEach(h=>{
+thead += `<th>${h}</th>`;
+});
+thead += "</tr>";
+
+document.querySelector("#stockTable thead").innerHTML = thead;
+
+let rows = "";
+
+for(let i=1;i<data.length;i++){
+
+rows += "<tr>";
+
+data[i].forEach(col=>{
+rows += `<td>${col}</td>`;
+});
+
+rows += "</tr>";
+}
+
+document.querySelector("#stockTable tbody").innerHTML = rows;
+}
+
+loadData();
+
+</script>
 
 </body>
 </html>
