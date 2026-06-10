@@ -242,7 +242,18 @@ async function saveData(){
     alert("กรุณากรอกข้อมูลให้ครบ");
     return;
   }
+const remain =
+Number(document.getElementById("remain").value);
 
+const qty =
+Number(document.getElementById("qty").value);
+
+if(qty > remain){
+
+  alert("จำนวนเบิกมากกว่าคงเหลือ");
+
+  return;
+}
   const bodyData = {
 
     code:
