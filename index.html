@@ -99,9 +99,13 @@ style="width:320px;"
 
 <div id="dashboard">
 
-<div class="card blue">
-<h3>📦 รายการทั้งหมด</h3>
-<h2 id="totalRows">0</h2>
+<div class="card blue"
+     onclick="window.location.href='remain.html'"
+     style="cursor:pointer;">
+
+<h3>📦 สต๊อกคงเหลือ</h3>
+<h2>คลิกดู</h2>
+
 </div>
 
 <div class="card green">
@@ -111,26 +115,12 @@ style="width:320px;"
 
 </div>
 
-<h3>📦 สต๊อกคงเหลือ</h3>
 
   <button onclick="location.href='remain.html'">
 📦 ดูสต๊อกคงเหลือ
 </button>
   
-<table id="productTable">
 
-<thead>
-<tr>
-<th>รหัส</th>
-<th>ชื่อสินค้า</th>
-<th>หน่วย</th>
-<th>คงเหลือ</th>
-</tr>
-</thead>
-
-<tbody id="productBody"></tbody>
-
-</table>
 
 <h3>📋 ประวัติการเบิก</h3>
 
