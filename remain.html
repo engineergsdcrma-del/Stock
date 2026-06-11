@@ -49,11 +49,11 @@ button{
 </button>
 
 </div>
+  
 <input
 type="text"
 id="search"
-placeholder="🔍 ค้นหา"
-onkeyup="searchTable()"
+placeholder="🔍 ค้นหารหัสสินค้า หรือ ชื่อสินค้า"
 style="
 width:300px;
 padding:8px;
@@ -109,28 +109,34 @@ async function loadRemain(){
 
 loadRemain();
 
+document
+.getElementById("search")
+.addEventListener("keyup", searchTable);
+
 function searchTable(){
 
-  let keyword =
-  document.getElementById("search")
+  const keyword =
+  document
+  .getElementById("search")
   .value
+  .trim()
   .toLowerCase();
 
-  let rows =
-  document.querySelectorAll("#productTable tbody tr");
+  const rows =
+  document
+  .querySelectorAll("#productBody tr");
 
-  for(let i=0;i<rows.length;i++){
+  rows.forEach(function(row){
 
-    let text =
-    rows[i].innerText.toLowerCase();
+    const text =
+    row.textContent.toLowerCase();
 
-    if(text.indexOf(keyword) > -1){
-      rows[i].style.display = "";
-    }else{
-      rows[i].style.display = "none";
-    }
+    row.style.display =
+      text.includes(keyword)
+      ? ""
+      : "none";
 
-  }
+  });
 
 }
 
