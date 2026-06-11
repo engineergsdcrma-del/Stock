@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>สต๊อกคงเหลือ</title>
+
+<style>
+
+body{
+  font-family:Arial;
+  margin:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  border:1px solid #ddd;
+  padding:8px;
+}
+
+th{
+  background:#2196f3;
+  color:white;
+}
+
+button{
+  padding:10px 20px;
+  margin-bottom:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>📦 สต๊อกคงเหลือ</h1>
+
+<button onclick="location.href='index.html'">
+⬅ กลับหน้าหลัก
+</button>
+
+<table>
+
+<thead>
+<tr>
+<th>รหัส</th>
+<th>ชื่อสินค้า</th>
+<th>หน่วย</th>
+<th>คงเหลือ</th>
+</tr>
+</thead>
+
+<tbody id="productBody"></tbody>
+
+</table>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
+
+async function loadRemain(){
+
+ const res =
+ await fetch(API + "?type=products");
+
+ const data =
+ await res.json();
+
+ let rows = "";
+
+ for(let i=1;i<data.length;i++){
+
+   rows += `
+   <tr>
+     <td>${data[i][0]}</td>
+     <td>${data[i][1]}</td>
+     <td>${data[i][2]}</td>
+     <td>${data[i][3]}</td>
+   </tr>
+   `;
+ }
+
+ document.getElementById("productBody").innerHTML =
+ rows;
+}
+
+loadRemain();
+
+</script>
+
+</body>
+</html>
