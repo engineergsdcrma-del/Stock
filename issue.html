@@ -80,6 +80,17 @@ onclick="location.href='index.html'">
 
 <h3>📋 ประวัติการเบิก</h3>
 
+<input
+type="text"
+id="search"
+placeholder="🔍 ค้นหารหัสสินค้า ชื่อสินค้า ผู้เบิก"
+onkeyup="searchTable()"
+style="
+width:350px;
+padding:8px;
+margin:10px 0;
+">
+
 <table id="stockTable">
 
 <thead></thead>
@@ -241,7 +252,34 @@ async function saveData(){
 
 }
 
+function searchTable(){
 
+let keyword =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+let rows =
+document.querySelectorAll("#stockTable tbody tr");
+
+rows.forEach(function(row){
+
+```
+let text =
+row.innerText.toLowerCase();
+
+if(text.indexOf(keyword) > -1){
+  row.style.display = "";
+}else{
+  row.style.display = "none";
+}
+```
+
+});
+
+}
+
+  
 // เริ่มต้นระบบ
 loadProducts();
 loadData();
