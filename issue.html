@@ -6,6 +6,7 @@
 <title>จำนวนเบิกทั้งหมด</title>
 
 <style>
+
 body{
   font-family:Arial,sans-serif;
   margin:20px;
@@ -27,6 +28,23 @@ button{
   color:white;
   border:none;
 }
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+th,td{
+  border:1px solid #ddd;
+  padding:8px;
+}
+
+th{
+  background:#2196f3;
+  color:white;
+}
+
 </style>
 
 </head>
@@ -35,9 +53,10 @@ button{
 
 <h1>📋 จำนวนเบิกทั้งหมด</h1>
 
-<button class="back-btn" onclick="location.href='index.html'">
-⬅ กลับหน้าหลัก
-</button>
+<button
+class="back-btn"
+onclick="location.href='index.html'">
+⬅ กลับหน้าหลัก </button>
 
 <hr>
 
@@ -46,20 +65,36 @@ button{
 </select>
 
 <input id="name" placeholder="ชื่อสินค้า" readonly>
+
 <input id="unit" placeholder="หน่วย" readonly>
+
 <input id="remain" placeholder="คงเหลือ" readonly>
 
 <input id="qty" placeholder="จำนวน">
+
 <input id="user" placeholder="ผู้เบิก">
+
 <input id="place" placeholder="นำไปใช้ที่ไหน">
 
 <button onclick="saveData()">บันทึก</button>
+
+<h3>📋 ประวัติการเบิก</h3>
+
+<table id="stockTable">
+
+<thead></thead>
+
+<tbody></tbody>
+
+</table>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
+
+// โหลดสินค้า
 async function loadProducts(){
 
   const res =
@@ -83,13 +118,16 @@ async function loadProducts(){
         data-unit="${data[i][2]}"
         data-remain="${data[i][3]}"
       >
-        ${data[i][0]}
+        ${data[i][0]} - ${data[i][1]}
       </option>
     `;
   }
 }
 
-document.getElementById("code")
+
+// เลือกสินค้า
+document
+.getElementById("code")
 .addEventListener("change",function(){
 
   const op =
@@ -106,6 +144,52 @@ document.getElementById("code")
 
 });
 
+
+// โหลดประวัติการเบิก
+async function loadData(){
+
+  const response =
+  await fetch(API);
+
+  const data =
+  await response.json();
+
+  let head = "<tr>";
+
+  data[0].forEach(col=>{
+
+    head += `<th>${col}</th>`;
+
+  });
+
+  head += "</tr>";
+
+  document.querySelector(
+    "#stockTable thead"
+  ).innerHTML = head;
+
+  let rows = "";
+
+  for(let i=1;i<data.length;i++){
+
+    rows += "<tr>";
+
+    data[i].forEach(col=>{
+
+      rows += `<td>${col}</td>`;
+
+    });
+
+    rows += "</tr>";
+  }
+
+  document.querySelector(
+    "#stockTable tbody"
+  ).innerHTML = rows;
+}
+
+
+// บันทึก
 async function saveData(){
 
   const remain =
@@ -117,8 +201,8 @@ async function saveData(){
   if(qty > remain){
 
     alert("จำนวนเบิกมากกว่าคงเหลือ");
-    return;
 
+    return;
   }
 
   const bodyData = {
@@ -140,18 +224,27 @@ async function saveData(){
   await fetch(API,{
 
     method:"POST",
+
     mode:"no-cors",
+
     body:JSON.stringify(bodyData)
 
   });
 
   alert("บันทึกสำเร็จ");
 
-  location.reload();
+  setTimeout(()=>{
+
+    location.reload();
+
+  },1000);
 
 }
 
+
+// เริ่มต้นระบบ
 loadProducts();
+loadData();
 
 </script>
 
