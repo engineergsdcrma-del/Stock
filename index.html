@@ -136,30 +136,7 @@ const API =
 
 
 // โหลดสต๊อกคงเหลือ
-async function loadRemain(){
 
-const res =
-await fetch(API + "?type=products");
-
-const data =
-await res.json();
-
-let rows = "";
-
-for(let i=1;i<data.length;i++){
-
-rows += `
-<tr>
-<td>${data[i][0]}</td>
-<td>${data[i][1]}</td>
-<td>${data[i][2]}</td>
-<td>${data[i][3]}</td>
-</tr>
-`;
-}
-
-document.getElementById("productBody").innerHTML =
-rows;
 
 }
 
