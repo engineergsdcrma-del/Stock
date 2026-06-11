@@ -1,14 +1,159 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>จำนวนเบิกทั้งหมด</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  margin:20px;
+}
+
+input,select{
+  padding:8px;
+  margin:5px;
+  min-width:150px;
+}
+
+button{
+  padding:8px 15px;
+  cursor:pointer;
+}
+
+.back-btn{
+  background:#2196f3;
+  color:white;
+  border:none;
+}
+</style>
+
+</head>
+
 <body>
+
+<h1>📋 จำนวนเบิกทั้งหมด</h1>
+
+<button class="back-btn" onclick="location.href='index.html'">
+⬅ กลับหน้าหลัก
+</button>
+
+<hr>
+
 <select id="code">
 <option value="">-- เลือกรหัสสินค้า --</option>
 </select>
 
-<input id="name">
-<input id="unit">
-<input id="remain">
-<input id="qty">
-<input id="user">
-<input id="place">
+<input id="name" placeholder="ชื่อสินค้า" readonly>
+<input id="unit" placeholder="หน่วย" readonly>
+<input id="remain" placeholder="คงเหลือ" readonly>
+
+<input id="qty" placeholder="จำนวน">
+<input id="user" placeholder="ผู้เบิก">
+<input id="place" placeholder="นำไปใช้ที่ไหน">
 
 <button onclick="saveData()">บันทึก</button>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
+
+async function loadProducts(){
+
+  const res =
+  await fetch(API + "?type=products");
+
+  const data =
+  await res.json();
+
+  const select =
+  document.getElementById("code");
+
+  select.innerHTML =
+  '<option value="">-- เลือกรหัสสินค้า --</option>';
+
+  for(let i=1;i<data.length;i++){
+
+    select.innerHTML += `
+      <option
+        value="${data[i][0]}"
+        data-name="${data[i][1]}"
+        data-unit="${data[i][2]}"
+        data-remain="${data[i][3]}"
+      >
+        ${data[i][0]}
+      </option>
+    `;
+  }
+}
+
+document.getElementById("code")
+.addEventListener("change",function(){
+
+  const op =
+  this.options[this.selectedIndex];
+
+  document.getElementById("name").value =
+  op.dataset.name || "";
+
+  document.getElementById("unit").value =
+  op.dataset.unit || "";
+
+  document.getElementById("remain").value =
+  op.dataset.remain || "";
+
+});
+
+async function saveData(){
+
+  const remain =
+  Number(document.getElementById("remain").value);
+
+  const qty =
+  Number(document.getElementById("qty").value);
+
+  if(qty > remain){
+
+    alert("จำนวนเบิกมากกว่าคงเหลือ");
+    return;
+
+  }
+
+  const bodyData = {
+
+    code:
+    document.getElementById("code").value,
+
+    qty:
+    document.getElementById("qty").value,
+
+    user:
+    document.getElementById("user").value,
+
+    place:
+    document.getElementById("place").value
+
+  };
+
+  await fetch(API,{
+
+    method:"POST",
+    mode:"no-cors",
+    body:JSON.stringify(bodyData)
+
+  });
+
+  alert("บันทึกสำเร็จ");
+
+  location.reload();
+
+}
+
+loadProducts();
+
+</script>
+
 </body>
+</html>
