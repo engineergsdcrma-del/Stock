@@ -113,28 +113,33 @@ document
 .getElementById("search")
 .addEventListener("keyup", searchTable);
 
-function searchTable(){
+  function searchTable(){
 
   const keyword =
-  document
-  .getElementById("search")
+  document.getElementById("search")
   .value
   .trim()
   .toLowerCase();
 
   const rows =
-  document
-  .querySelectorAll("#productBody tr");
+  document.querySelectorAll("#productBody tr");
 
   rows.forEach(function(row){
 
-    const text =
-    row.textContent.toLowerCase();
+    const code =
+    row.cells[0].textContent.toLowerCase();
 
-    row.style.display =
-      text.includes(keyword)
-      ? ""
-      : "none";
+    const name =
+    row.cells[1].textContent.toLowerCase();
+
+    if(
+      code.includes(keyword) ||
+      name.includes(keyword)
+    ){
+      row.style.display = "";
+    }else{
+      row.style.display = "none";
+    }
 
   });
 
