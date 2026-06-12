@@ -10,7 +10,7 @@ body{
   margin:20px;
 }
 
-input{
+input,select{
   padding:8px;
   margin:5px;
 }
@@ -38,9 +38,45 @@ button{
 
 <input id="qty" placeholder="จำนวนที่เพิ่ม">
 
-<button>
+<button onclick="saveStock()">
 บันทึก
 </button>
 
+
+  <script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
+
+async function loadProducts(){
+
+  const res =
+  await fetch(API + "?type=products");
+
+  const data =
+  await res.json();
+
+  const select =
+  document.getElementById("code");
+
+  select.innerHTML =
+  '<option value="">-- เลือกรหัสสินค้า --</option>';
+
+  for(let i=1;i<data.length;i++){
+
+    select.innerHTML += `
+      <option value="${data[i][0]}">
+      ${data[i][0]} - ${data[i][1]}
+      </option>
+    `;
+
+  }
+
+}
+
+loadProducts();
+
+</script>
+  
 </body>
 </html>
