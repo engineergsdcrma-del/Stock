@@ -48,7 +48,20 @@ button{
 ➕ เพิ่มสต๊อกสินค้า
 </button>
 
+
+  <br><br>
+
+<button onclick="filterGroup('A')">A</button>
+<button onclick="filterGroup('B')">B</button>
+<button onclick="filterGroup('C')">C</button>
+<button onclick="filterGroup('D')">D</button>
+<button onclick="filterGroup('E')">E</button>
+<button onclick="filterGroup('ALL')">ทั้งหมด</button>
+
+  
+  
 </div>
+
   
 <input
 type="text"
@@ -145,6 +158,34 @@ document
 
 }
 
+
+  function filterGroup(group){
+
+  const rows =
+  document.querySelectorAll("#productBody tr");
+
+  rows.forEach(function(row){
+
+    const code =
+    row.cells[0].textContent;
+
+    if(group === "ALL"){
+
+      row.style.display = "";
+
+    }else{
+
+      if(code.startsWith(group)){
+        row.style.display = "";
+      }else{
+        row.style.display = "none";
+      }
+
+    }
+
+  });
+
+}
 </script>
 
 </body>
