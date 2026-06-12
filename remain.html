@@ -44,6 +44,27 @@ opacity:0.9;
 
 }
 
+.group-btn{
+  background:#556b2f;
+  color:white;
+  border:none;
+  border-radius:8px;
+  padding:10px 18px;
+  font-weight:bold;
+  margin:4px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.group-btn:hover{
+  background:#6b8e23;
+  transform:translateY(-2px);
+}
+
+.group-btn:active{
+  transform:translateY(0px);
+}
+  
 </style>
 </head>
 
@@ -64,12 +85,29 @@ opacity:0.9;
 
   <br><br>
 
-<button onclick="filterGroup('A')">🏢บก.</button>
-<button onclick="filterGroup('B')">🏠อาคาร</button>
-<button onclick="filterGroup('C')">⚡ไฟฟ้า</button>
-<button onclick="filterGroup('D')">🚰ประปา</button>
-<button onclick="filterGroup('E')">💧น้ำเสีย</button>
-<button onclick="filterGroup('ALL')">📋ทั้งหมด</button>
+<button class="group-btn" onclick="filterGroup('A')">
+🏢 บก.
+</button>
+
+<button class="group-btn" onclick="filterGroup('B')">
+🏠 อาคาร
+</button>
+
+<button class="group-btn" onclick="filterGroup('C')">
+⚡ ไฟฟ้า
+</button>
+
+<button class="group-btn" onclick="filterGroup('D')">
+🚰 ประปา
+</button>
+
+<button class="group-btn" onclick="filterGroup('E')">
+💧 น้ำเสีย
+</button>
+
+<button class="group-btn" onclick="filterGroup('ALL')">
+📋 ทั้งหมด
+</button>
 
   
   
@@ -199,6 +237,9 @@ document
   });
 
 }
+
+
+  
 </script>
 
 </body>
