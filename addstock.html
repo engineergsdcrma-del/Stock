@@ -76,6 +76,28 @@ async function loadProducts(){
 
 loadProducts();
 
+    async function saveStock(){
+
+  const code =
+  document.getElementById("code").value;
+
+  const qty =
+  document.getElementById("qty").value;
+
+  if(!code || !qty){
+
+    alert("กรุณากรอกข้อมูล");
+
+    return;
+  }
+
+  alert(
+    "รหัสสินค้า : " + code +
+    "\nจำนวนเพิ่ม : " + qty
+  );
+
+}
+
 </script>
   
 </body>
