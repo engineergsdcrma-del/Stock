@@ -105,11 +105,6 @@ style="width:320px;"
 
 
  
-  
-
-
-
-
 <table id="stockTable">
 <thead></thead>
 <tbody></tbody>
@@ -139,32 +134,6 @@ const API =
 
 // โหลดสต๊อกคงเหลือ
 
-
-
-
-
-
-
-// เลือกรหัสสินค้า
-document.addEventListener("change",function(e){
-
-if(e.target.id==="code"){
-
-const op =
-e.target.options[e.target.selectedIndex];
-
-document.getElementById("name").value =
-op.dataset.name || "";
-
-document.getElementById("unit").value =
-op.dataset.unit || "";
-
-document.getElementById("remain").value =
-op.dataset.remain || "";
-
-}
-
-});
 
 
 // โหลดประวัติ
@@ -215,84 +184,12 @@ rows += "</tr>";
 document.querySelector("#stockTable tbody").innerHTML =
 rows;
 
-document.getElementById("totalRows").innerText =
-totalRows;
-
-document.getElementById("totalQty").innerText =
-totalQty;
 
 }
 
 
-// บันทึก
-async function saveData(){
 
-if(
-document.getElementById("code").value==="" ||
-document.getElementById("qty").value===""
-){
-alert("กรุณากรอกข้อมูลให้ครบ");
-return;
-}
 
-const remain =
-Number(document.getElementById("remain").value);
-
-const qty =
-Number(document.getElementById("qty").value);
-
-if(qty > remain){
-
-alert("จำนวนเบิกมากกว่าคงเหลือ");
-
-return;
-}
-
-const bodyData = {
-
-code:
-document.getElementById("code").value,
-
-qty:
-document.getElementById("qty").value,
-
-user:
-document.getElementById("user").value,
-
-place:
-document.getElementById("place").value
-
-};
-
-await fetch(API,{
-
-method:"POST",
-
-mode:"no-cors",
-
-body:JSON.stringify(bodyData)
-
-});
-
-alert("บันทึกสำเร็จ");
-
-document.getElementById("code").value="";
-document.getElementById("name").value="";
-document.getElementById("unit").value="";
-document.getElementById("remain").value="";
-document.getElementById("qty").value="";
-document.getElementById("user").value="";
-document.getElementById("place").value="";
-
-setTimeout(()=>{
-
-loadProducts();
-
-loadData();
-
-},1000);
-
-}
 
 
 // ค้นหา
@@ -320,7 +217,7 @@ text.indexOf(keyword) > -1 ? "" : "none";
 
 
 // เริ่มระบบ
-loadProducts();
+
 
 loadData();
 
