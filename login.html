@@ -7,7 +7,6 @@
 <title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -22,8 +21,8 @@ body{
 .header{
   background:#1976d2;
   color:white;
-  padding:25px;
   text-align:center;
+  padding:30px;
 }
 
 .header h1{
@@ -32,28 +31,148 @@ body{
 
 .header p{
   margin-top:10px;
-  font-size:18px;
-}
-
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:30px;
 }
 
 .dashboard{
   display:flex;
-  gap:20px;
   justify-content:center;
-  margin-bottom:40px;
+  gap:20px;
+  margin:40px auto;
+  max-width:900px;
 }
 
 .card{
-  width:280px;
-  height:180px;
+  width:250px;
+  height:150px;
   border-radius:15px;
   color:white;
-  padding:20px;
   display:flex;
+  justify-content:center;
   align-items:center;
-  justify
+  font-size:22px;
+  font-weight:bold;
+}
+
+.blue{
+  background:#2196f3;
+}
+
+.green{
+  background:#4caf50;
+}
+
+.login-box{
+  width:350px;
+  background:white;
+  margin:30px auto;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
+
+.login-box h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.login-box p{
+  text-align:center;
+  color:#666;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#1976d2;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#125ca1;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+  <h1>📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</h1>
+  <p>Stock Management System</p>
+</div>
+
+<div class="dashboard">
+  <div class="card blue">📦 คลังพัสดุ</div>
+  <div class="card green">📊 รายการเบิก</div>
+</div>
+
+<div class="login-box">
+
+  <h2>🔐 เข้าสู่ระบบ</h2>
+
+  <p>เฉพาะเจ้าหน้าที่เท่านั้น</p>
+
+  <input type="text" id="user" placeholder="Username">
+
+  <input type="password" id="pass" placeholder="Password">
+
+<button onclick="login()">เข้าสู่ระบบ</button>
+
+</div>
+
+<script>
+
+const API="YOUR_APPS_SCRIPT_URL";
+
+async function login(){
+
+  const user=document.getElementById("user").value.trim();
+  const pass=document.getElementById("pass").value.trim();
+
+  if(user==="" || pass===""){
+    alert("กรุณากรอก Username และ Password");
+    return;
+  }
+
+  const res=await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"login",
+      username:user,
+      password:pass
+    })
+  });
+
+  const result=await res.text();
+
+  if(result==="OK"){
+
+    localStorage.setItem("login","ok");
+    localStorage.setItem("user",user);
+
+    location.href="index.html";
+
+  }else{
+
+    alert("Username หรือ Password ไม่ถูกต้อง");
+
+  }
+
+}
+</script>
+
+</body>
+</html>
