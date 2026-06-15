@@ -24,6 +24,24 @@ button{
 
 <body>
 
+  <script>
+
+const USERNAME = "admin";
+const PASSWORD = "1234";
+
+const user = prompt("Username");
+const pass = prompt("Password");
+
+if(user !== USERNAME || pass !== PASSWORD){
+
+  alert("ไม่มีสิทธิ์เข้าใช้งาน");
+
+  window.location.href = "index.html";
+
+}
+
+</script>
+
 <h1>➕ เพิ่มสต๊อกสินค้า</h1>
 
 <button onclick="location.href='remain.html'">
