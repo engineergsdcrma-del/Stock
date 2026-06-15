@@ -74,14 +74,6 @@ th{
 
 <br><br>
 
-<input
-type="text"
-id="search"
-placeholder="🔍 ค้นหารหัสสินค้า ชื่อสินค้า ผู้เบิก"
-onkeyup="searchTable()"
-style="width:320px;"
-
->
 
 <div id="dashboard">
 
@@ -103,12 +95,7 @@ style="width:320px;"
 
 </div>
 
-
  
-<table id="stockTable">
-<thead></thead>
-<tbody></tbody>
-</table>
 
 <script>
 
@@ -132,54 +119,9 @@ const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
 
-// โหลดสต๊อกคงเหลือ
 
 
 
-// โหลดประวัติ
-async function loadData(){
-
-const response =
-await fetch(API);
-
-const data =
-await response.json();
-
-let totalRows =
-data.length - 1;
-
-let totalQty = 0;
-
-let head = "<tr>";
-
-data[0].forEach(col=>{
-
-head += `<th>${col}</th>`;
-
-});
-
-head += "</tr>";
-
-document.querySelector("#stockTable thead").innerHTML =
-head;
-
-let rows = "";
-
-for(let i=1;i<data.length;i++){
-
-totalQty += Number(data[i][5]) || 0;
-
-rows += "<tr>";
-
-data[i].forEach(col=>{
-
-rows += `<td>${col}</td>`;
-
-});
-
-rows += "</tr>";
-
-}
 
 document.querySelector("#stockTable tbody").innerHTML =
 rows;
@@ -190,36 +132,11 @@ rows;
 
 
 
-
-
-// ค้นหา
-function searchTable(){
-
-let keyword =
-document.getElementById("search")
-.value
-.toLowerCase();
-
-let rows =
-document.querySelectorAll("#stockTable tbody tr");
-
-rows.forEach(function(row){
-
-let text =
-row.innerText.toLowerCase();
-
-row.style.display =
-text.indexOf(keyword) > -1 ? "" : "none";
-
-});
-
-}
-
-
 // เริ่มระบบ
 
 
-loadData();
+// loadProducts();
+// loadData();
 
 </script>
 
