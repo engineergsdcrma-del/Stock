@@ -68,7 +68,9 @@ th{
 
   
 <h1>📦ระบบคลังรายการ สป.กยย.สบร.รร.จปร</h1>
-
+<button onclick="logout()">
+🚪 Logout
+</button>
 
 <br><br>
 
@@ -115,6 +117,22 @@ style="width:320px;"
 
 <script>
 
+  function logout(){
+
+  localStorage.removeItem("login");
+
+  location.href="login.html";
+
+}
+
+  if(localStorage.getItem("login")!="ok"){
+
+  location.href="login.html";
+
+}
+
+
+  
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
