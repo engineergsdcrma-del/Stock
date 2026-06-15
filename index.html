@@ -1,144 +1,160 @@
+```html
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
 
 <style>
+
 body{
-  font-family:Arial,sans-serif;
-  margin:20px;
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#f4f6f9;
 }
 
-input,select{
-  padding:8px;
-  margin:5px;
-  min-width:150px;
+.header{
+    background:#1976d2;
+    color:white;
+    padding:20px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
 }
 
-button{
-  padding:8px 15px;
-  cursor:pointer;
+.header h1{
+    margin:0;
+    font-size:28px;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
+.logout-btn{
+    background:#e53935;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
 }
 
-th,td{
-  border:1px solid #ddd;
-  padding:8px;
+.logout-btn:hover{
+    background:#c62828;
 }
 
-th{
-  background:#2196f3;
-  color:white;
-}
-
-#dashboard{
-  display:flex;
-  gap:20px;
-  margin:20px 0;
+.dashboard{
+    max-width:1000px;
+    margin:60px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+    padding:0 20px;
 }
 
 .card{
-  color:white;
-  padding:20px;
-  border-radius:10px;
-  min-width:220px;
+    color:white;
+    padding:40px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+.card:hover{
+    transform:translateY(-8px);
 }
 
 .blue{
-  background:#2196f3;
+    background:linear-gradient(135deg,#2196f3,#1565c0);
 }
 
 .green{
-  background:#4caf50;
+    background:linear-gradient(135deg,#4caf50,#2e7d32);
 }
-</style>
 
+.card h2{
+    margin:0;
+    font-size:30px;
+}
+
+.card p{
+    margin-top:15px;
+    font-size:16px;
+    line-height:1.6;
+}
+
+.footer{
+    text-align:center;
+    color:#666;
+    margin-top:50px;
+    padding-bottom:30px;
+}
+
+</style>
 </head>
 
 <body>
 
+<div class="header">
 
+    <h1>📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</h1>
 
-  
-<h1>📦ระบบคลังรายการ สป.กยย.สบร.รร.จปร</h1>
-<button onclick="logout()">
-🚪 Logout
-</button>
-
-<br><br>
-
-
-<div id="dashboard">
-
-<div class="card blue"
-     onclick="window.location.href='remain.html'"
-     style="cursor:pointer;">
-
-<h3>📦 รายการสป.คงเหลือ</h3>
-
+    <button class="logout-btn" onclick="logout()">
+        🚪 Logout
+    </button>
 
 </div>
 
-<div class="card green"
-     onclick="location.href='issue.html'"
-     style="cursor:pointer;">
+<div class="dashboard">
 
-<h3>📊 รายการเบิก สป. </h3>
+    <div class="card blue"
+         onclick="location.href='remain.html'">
 
+        <h2>📦 สต๊อกคงเหลือ</h2>
+
+        <p>
+            ตรวจสอบจำนวนสป.คงเหลือทั้งหมด
+            พร้อมค้นหารายการสินค้า
+        </p>
+
+    </div>
+
+    <div class="card green"
+         onclick="location.href='issue.html'">
+
+        <h2>📋 เบิกสินค้า</h2>
+
+        <p>
+            บันทึกรายการเบิกสินค้า
+            และตรวจสอบประวัติการเบิก
+        </p>
+
+    </div>
 
 </div>
 
- 
+<div class="footer">
+    Stock Management System v1.0
+</div>
 
 <script>
 
-  function logout(){
+if(localStorage.getItem("login") != "ok"){
 
-  localStorage.removeItem("login");
-
-  location.href="login.html";
+    location.href = "login.html";
 
 }
 
-  if(localStorage.getItem("login")!="ok"){
+function logout(){
 
-  location.href="login.html";
+    localStorage.removeItem("login");
 
-}
-
-
-  
-const API =
-"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
-
-
-
-
-
-
-document.querySelector("#stockTable tbody").innerHTML =
-rows;
-
+    location.href = "login.html";
 
 }
-
-
-
-
-// เริ่มระบบ
-
-
-// loadProducts();
-// loadData();
 
 </script>
 
 </body>
 </html>
+```
