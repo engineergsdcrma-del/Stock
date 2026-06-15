@@ -142,36 +142,7 @@ const API =
 
 
 
-// โหลดสินค้าเข้า dropdown
-async function loadProducts(){
 
-const res =
-await fetch(API + "?type=products");
-
-const data =
-await res.json();
-
-const select =
-document.getElementById("code");
-
-select.innerHTML =
-'<option value="">-- เลือกรหัสสินค้า --</option>';
-
-for(let i=1;i<data.length;i++){
-
-select.innerHTML += `
-<option
-value="${data[i][0]}"
-data-name="${data[i][1]}"
-data-unit="${data[i][2]}"
-data-remain="${data[i][3]}"
->
-${data[i][0]}
-</option>
-`;
-}
-
-}
 
 
 // เลือกรหัสสินค้า
