@@ -131,7 +131,53 @@ location.href="index.html";
 
 }else{
 
-alert("Username หรือ Password ไม่ถูกต้อง");
+const popup=
+document.createElement("div");
+
+popup.innerHTML=`
+<div style="
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,.3);
+text-align:center;
+z-index:9999;
+width:300px;
+">
+
+<h2 style="color:red;">
+⛔ เข้าระบบไม่ได้
+</h2>
+
+<p>
+รหัสไม่ถูกต้อง<br>
+คุณไม่ใช่เจ้าหน้าที่
+</p>
+
+<button onclick="this.parentElement.parentElement.remove()"
+style="
+padding:10px 20px;
+background:#1976d2;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">
+ตกลง
+</button>
+
+</div>
+`;
+
+document.body.appendChild(popup);
+
+document.getElementById("user").value="";
+document.getElementById("pass").value="";
+document.getElementById("user").focus();
 
 }
 
