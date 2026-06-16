@@ -2,66 +2,214 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Stock System</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
 
 <style>
 
-body{
-font-family:Arial,sans-serif;
-background:#f4f6f9;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
+
+body{
+background:#f4f6f9;
+}
+
+.header{
+
+background:#1976d2;
+color:white;
+padding:25px;
+text-align:center;
+
+}
+
+.header h1{
+
+font-size:32px;
+
+}
+
+.header p{
+
+margin-top:10px;
+
+}
+
+/* Dashboard */
+
+.dashboard{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+max-width:900px;
+margin:40px auto;
+
+}
+
+.card{
+
+height:150px;
+border-radius:15px;
+color:white;
+padding:25px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.blue{
+background:linear-gradient(
+135deg,
+#2196f3,
+#1565c0
+);
+}
+
+.green{
+background:linear-gradient(
+135deg,
+#4caf50,
+#2e7d32
+);
+}
+
+.orange{
+background:linear-gradient(
+135deg,
+#ff9800,
+#ef6c00
+);
+}
+
+.red{
+background:linear-gradient(
+135deg,
+#f44336,
+#c62828
+);
+}
+
+.card h2{
+
+margin-bottom:15px;
+
+}
+
+/* Login */
 
 .login-box{
+
 width:350px;
 background:white;
+margin:40px auto;
 padding:30px;
 border-radius:15px;
-box-shadow:0 4px 20px rgba(0,0,0,.15);
+box-shadow:0 5px 20px rgba(0,0,0,.15);
+
 }
 
-h2{
+.login-box h2{
+
 text-align:center;
 margin-bottom:20px;
+
 }
 
 input{
+
 width:100%;
 padding:12px;
 margin-bottom:12px;
 border:1px solid #ccc;
 border-radius:8px;
-box-sizing:border-box;
+
 }
 
 button{
+
 width:100%;
 padding:12px;
 background:#1976d2;
 color:white;
 border:none;
 border-radius:8px;
-cursor:pointer;
 font-size:16px;
+cursor:pointer;
+
 }
 
 button:hover{
+
 background:#1565c0;
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="header">
+
+<h1>
+📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.
+</h1>
+
+<p>
+ระบบบริหารจัดการคลังสินค้า
+</p>
+
+</div>
+
+
+<div class="dashboard">
+
+<div class="card blue">
+
+<h2>📦 สต๊อกสินค้า</h2>
+
+<p>ตรวจสอบรายการสินค้า</p>
+
+</div>
+
+<div class="card green">
+
+<h2>📋 เบิกสินค้า</h2>
+
+<p>ตรวจสอบรายการเบิก</p>
+
+</div>
+
+<div class="card orange">
+
+<h2>🏢 หน่วยงาน</h2>
+
+<p>จัดการข้อมูลหน่วยงาน</p>
+
+</div>
+
+<div class="card red">
 
 <h2>🔐 เฉพาะเจ้าหน้าที่</h2>
+
+<p>จำกัดสิทธิ์การใช้งาน</p>
+
+</div>
+
+</div>
+
+
+<div class="login-box">
+
+<h2>
+🔐 Login เฉพาะเจ้าหน้าที่
+</h2>
 
 <input
 type="text"
@@ -74,14 +222,16 @@ id="pass"
 placeholder="Password">
 
 <button onclick="login()">
+
 เข้าสู่ระบบ
+
 </button>
 
 </div>
 
 <script>
 
-const API =
+const API=
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
 async function login(){
@@ -92,17 +242,10 @@ document.getElementById("user").value.trim();
 const pass=
 document.getElementById("pass").value.trim();
 
-if(user==="" || pass===""){
-
-alert("กรุณากรอก Username และ Password");
-return;
-
-}
-
-try{
-
 const res=await fetch(API,{
+
 method:"POST",
+
 body:JSON.stringify({
 
 action:"login",
@@ -110,14 +253,13 @@ username:user,
 password:pass
 
 })
+
 });
 
 const result=
 (await res.text()).trim();
 
-if(result==="OK"){
-
-localStorage.clear();
+if(result=="OK"){
 
 localStorage.setItem(
 "auth",
@@ -131,59 +273,9 @@ location.href="index.html";
 
 }else{
 
-const popup=
-document.createElement("div");
-
-popup.innerHTML=`
-<div style="
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 0 20px rgba(0,0,0,.3);
-text-align:center;
-z-index:9999;
-width:300px;
-">
-
-<h2 style="color:red;">
-⛔ เข้าระบบไม่ได้
-</h2>
-
-<p>
-รหัสไม่ถูกต้อง<br>
-คุณไม่ใช่เจ้าหน้าที่
-</p>
-
-<button onclick="this.parentElement.parentElement.remove()"
-style="
-padding:10px 20px;
-background:#1976d2;
-color:white;
-border:none;
-border-radius:8px;
-cursor:pointer;
-">
-ตกลง
-</button>
-
-</div>
-`;
-
-document.body.appendChild(popup);
-
-document.getElementById("user").value="";
-document.getElementById("pass").value="";
-document.getElementById("user").focus();
-
-}
-
-}catch(error){
-
-alert("ไม่สามารถเชื่อมต่อระบบได้");
+alert(
+"⛔ รหัสไม่ถูกต้อง\nคุณไม่ใช่เจ้าหน้าที่"
+);
 
 }
 
