@@ -138,17 +138,20 @@ body{
 
 <script>
 
-if(localStorage.getItem("login") != "ok"){
+const auth =
+localStorage.getItem("auth");
 
-    location.href = "login.html";
+if(auth !== "true"){
+
+location.href="login.html";
 
 }
 
 function logout(){
 
-    localStorage.removeItem("login");
+localStorage.clear();
 
-    location.href = "login.html";
+location.href="login.html";
 
 }
 
