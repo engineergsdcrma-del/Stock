@@ -1,269 +1,3 @@
-<!DOCTYPE html>
-
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#f4f6f9;
-padding:20px;
-}
-
-.header{
-background:#1976d2;
-color:white;
-padding:25px;
-border-radius:15px;
-text-align:center;
-margin-bottom:25px;
-}
-
-.header h1{
-font-size:32px;
-}
-
-.header p{
-margin-top:10px;
-font-size:16px;
-}
-
-#dashboard{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-bottom:40px;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-}
-
-.card h2{
-margin-bottom:15px;
-font-size:24px;
-}
-
-.item{
-background:#f7f7f7;
-padding:10px;
-border-radius:8px;
-margin-bottom:8px;
-font-size:15px;
-}
-
-.login-box{
-max-width:400px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-
-.login-box h2{
-text-align:center;
-margin-bottom:10px;
-}
-
-.login-box p{
-text-align:center;
-color:#666;
-margin-bottom:20px;
-}
-
-input{
-width:100%;
-padding:12px;
-margin-bottom:10px;
-border:1px solid #ccc;
-border-radius:8px;
-}
-
-button{
-width:100%;
-padding:12px;
-background:#1976d2;
-color:white;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
-}
-
-button:hover{
-background:#125ca1;
-}
-
-.footer{
-text-align:center;
-margin-top:15px;
-color:#666;
-font-size:14px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="header">
-<h1>📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</h1>
-<p>ระบบบริหารจัดการคลังพัสดุ</p>
-</div>
-
-<div id="dashboard">
-กำลังโหลดข้อมูล...
-</div>
-
-<div class="login-box">
-
-<h2>🔐 เข้าสู่ระบบ</h2>
-
-<p>เฉพาะเจ้าหน้าที่เท่านั้น</p>
-
-<input
-type="text"
-id="user"
-placeholder="Username">
-
-<input
-type="password"
-id="pass"
-placeholder="Password">
-
-<button onclick="login()">
-เข้าสู่ระบบ
-</button>
-
-<div class="footer">
-© Stock Management System
-</div>
-
-</div>
-
-<script>
-
-const API =
-"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
-
-async function loadDashboard(){
-
-try{
-
-const res =
-await fetch(API + "?type=products");
-
-const data =
-await res.json();
-
-const groups = {
-
-A:{
-title:"🏢 บก.",
-items:[]
-},
-
-B:{
-title:"🏠 อาคาร",
-items:[]
-},
-
-C:{
-title:"⚡ ไฟฟ้า",
-items:[]
-},
-
-D:{
-title:"🚰 ประปา",
-items:[]
-},
-
-E:{
-title:"💧 น้ำเสีย",
-items:[]
-}
-
-};
-
-for(let i=1;i<data.length;i++){
-
-const code =
-String(data[i][0] || "");
-
-const name =
-data[i][1] || "";
-
-const unit =
-data[i][2] || "";
-
-const remain =
-data[i][3] || "0";
-
-const prefix =
-code.charAt(0);
-
-if(groups[prefix]){
-
-groups[prefix].items.push(
-`${name}<br>คงเหลือ ${remain} ${unit}`
-);
-
-}
-
-}
-
-let html = "";
-
-for(const key in groups){
-
-html += `
-<div class="card">
-
-<h2>${groups[key].title}</h2>
-
-${
-groups[key].items.length
-?
-groups[key].items.map(item =>
-`<div class="item">${item}</div>`
-).join("")
-:
-'<div class="item">ไม่มีข้อมูล</div>'
-}
-
-</div>
-`;
-
-}
-
-document.getElementById("dashboard").innerHTML =
-html;
-
-}catch(err){
-
-document.getElementById("dashboard").innerHTML =
-"ไม่สามารถโหลดข้อมูล Dashboard ได้";
-
-}
-
-}
-
 async function login(){
 
 const user =
@@ -275,15 +9,13 @@ document.getElementById("pass").value.trim();
 if(user==="" || pass===""){
 
 alert("กรุณากรอก Username และ Password");
-
 return;
 
 }
 
 try{
 
-const res =
-await fetch(API,{
+const res = await fetch(API,{
 method:"POST",
 body:JSON.stringify({
 action:"login",
@@ -293,17 +25,25 @@ password:pass
 });
 
 const result =
-await res.text();
+(await res.text()).trim();
 
 if(result==="OK"){
 
-localStorage.setItem("login","ok");
-localStorage.setItem("user",user);
-localStorage.setItem("auth","true");
-  
+localStorage.clear();
+
+localStorage.setItem(
+"auth",
+JSON.stringify({
+login:true,
+user:user
+})
+);
+
 location.href="index.html";
 
 }else{
+
+localStorage.clear();
 
 alert("Username หรือ Password ไม่ถูกต้อง");
 
@@ -311,15 +51,8 @@ alert("Username หรือ Password ไม่ถูกต้อง");
 
 }catch(err){
 
-alert("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้");
+alert("เชื่อมต่อระบบไม่ได้");
 
 }
 
 }
-
-loadDashboard();
-
-</script>
-
-</body>
-</html>
