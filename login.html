@@ -1,9 +1,95 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Stock System</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f9;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.login-box{
+width:350px;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#1976d2;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#1565c0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h2>🔐 เฉพาะเจ้าหน้าที่</h2>
+
+<input
+type="text"
+id="user"
+placeholder="Username">
+
+<input
+type="password"
+id="pass"
+placeholder="Password">
+
+<button onclick="login()">
+เข้าสู่ระบบ
+</button>
+
+</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
+
 async function login(){
 
-const user =
+const user=
 document.getElementById("user").value.trim();
 
-const pass =
+const pass=
 document.getElementById("pass").value.trim();
 
 if(user==="" || pass===""){
@@ -15,16 +101,18 @@ return;
 
 try{
 
-const res = await fetch(API,{
+const res=await fetch(API,{
 method:"POST",
 body:JSON.stringify({
+
 action:"login",
 username:user,
 password:pass
+
 })
 });
 
-const result =
+const result=
 (await res.text()).trim();
 
 if(result==="OK"){
@@ -43,16 +131,19 @@ location.href="index.html";
 
 }else{
 
-localStorage.clear();
-
 alert("Username หรือ Password ไม่ถูกต้อง");
 
 }
 
-}catch(err){
+}catch(error){
 
-alert("เชื่อมต่อระบบไม่ได้");
+alert("ไม่สามารถเชื่อมต่อระบบได้");
+
+}
 
 }
 
-}
+</script>
+
+</body>
+</html>
