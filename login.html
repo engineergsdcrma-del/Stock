@@ -216,10 +216,14 @@ placeholder="Password">
 
 <script>
 
-const API=
+<script>
+
+const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
 async function login(){
+
+localStorage.removeItem("auth");
 
 const user=
 document.getElementById("user").value.trim();
@@ -227,7 +231,16 @@ document.getElementById("user").value.trim();
 const pass=
 document.getElementById("pass").value.trim();
 
-const res=await fetch(API,{
+if(user=="" || pass==""){
+
+alert("กรุณากรอก Username และ Password");
+return;
+
+}
+
+try{
+
+const res = await fetch(API,{
 
 method:"POST",
 
@@ -244,13 +257,15 @@ password:pass
 const result=
 (await res.text()).trim();
 
-if(result=="OK"){
+if(result==="OK"){
 
 localStorage.setItem(
 "auth",
 JSON.stringify({
+
 login:true,
 user:user
+
 })
 );
 
@@ -258,9 +273,22 @@ location.href="index.html";
 
 }else{
 
+localStorage.removeItem("auth");
+
 alert(
-"⛔ รหัสไม่ถูกต้อง\nคุณไม่ใช่เจ้าหน้าที่"
+"⛔ รหัสไม่ถูกต้อง\n\nคุณไม่ใช่เจ้าหน้าที่"
 );
+
+document.getElementById("user").value="";
+document.getElementById("pass").value="";
+
+}
+
+}catch(err){
+
+localStorage.removeItem("auth");
+
+alert("เชื่อมต่อระบบไม่ได้");
 
 }
 
