@@ -1,92 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Stock System</title>
 
 <style>
 
 body{
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:#f4f6f9;
+font-family:Arial,sans-serif;
+background:#f4f6f9;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
 }
 
-.header{
-    background:#1976d2;
-    color:white;
-    padding:20px 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+.login-box{
+width:350px;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 4px 20px rgba(0,0,0,.15);
 }
 
-.header h1{
-    margin:0;
-    font-size:28px;
+h2{
+text-align:center;
+margin-bottom:20px;
 }
 
-.logout-btn{
-    background:#e53935;
-    color:white;
-    border:none;
-    padding:10px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
+input{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
 }
 
-.logout-btn:hover{
-    background:#c62828;
+button{
+width:100%;
+padding:12px;
+background:#1976d2;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
 }
 
-.dashboard{
-    max-width:1000px;
-    margin:60px auto;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:30px;
-    padding:0 20px;
-}
-
-.card{
-    color:white;
-    padding:40px;
-    border-radius:20px;
-    cursor:pointer;
-    transition:0.3s;
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
-}
-
-.card:hover{
-    transform:translateY(-8px);
-}
-
-.blue{
-    background:linear-gradient(135deg,#2196f3,#1565c0);
-}
-
-.green{
-    background:linear-gradient(135deg,#4caf50,#2e7d32);
-}
-
-.card h2{
-    margin:0;
-    font-size:30px;
-}
-
-.card p{
-    margin-top:15px;
-    font-size:16px;
-    line-height:1.6;
-}
-
-.footer{
-    text-align:center;
-    color:#666;
-    margin-top:50px;
-    padding-bottom:30px;
+button:hover{
+background:#1565c0;
 }
 
 </style>
@@ -94,64 +59,87 @@ body{
 
 <body>
 
-<div class="header">
+<div class="login-box">
 
-    <h1>📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</h1>
+<h2>🔐 เฉพาะเจ้าหน้าที่</h2>
 
-    <button class="logout-btn" onclick="logout()">
-        🚪 Logout
-    </button>
+<input
+type="text"
+id="user"
+placeholder="Username">
 
-</div>
+<input
+type="password"
+id="pass"
+placeholder="Password">
 
-<div class="dashboard">
+<button onclick="login()">
+เข้าสู่ระบบ
+</button>
 
-    <div class="card blue"
-         onclick="location.href='remain.html'">
-
-        <h2>📦 สต๊อกคงเหลือ</h2>
-
-        <p>
-            ตรวจสอบจำนวนสป.คงเหลือทั้งหมด
-            พร้อมค้นหารายการสินค้า
-        </p>
-
-    </div>
-
-    <div class="card green"
-         onclick="location.href='issue.html'">
-
-        <h2>📋 เบิกสินค้า</h2>
-
-        <p>
-            บันทึกรายการเบิกสินค้า
-            และตรวจสอบประวัติการเบิก
-        </p>
-
-    </div>
-
-</div>
-
-<div class="footer">
-    Stock Management System v1.0
 </div>
 
 <script>
 
-const auth =
-localStorage.getItem("auth");
+const API =
+"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
-if(auth !== "true"){
+async function login(){
 
-location.href="login.html";
+const user=
+document.getElementById("user").value.trim();
+
+const pass=
+document.getElementById("pass").value.trim();
+
+if(user==="" || pass===""){
+
+alert("กรุณากรอก Username และ Password");
+return;
 
 }
 
-function logout(){
+try{
+
+const res=await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+
+action:"login",
+username:user,
+password:pass
+
+})
+});
+
+const result=
+(await res.text()).trim();
+
+if(result==="OK"){
 
 localStorage.clear();
 
-location.href="login.html";
+localStorage.setItem(
+"auth",
+JSON.stringify({
+login:true,
+user:user
+})
+);
+
+location.href="index.html";
+
+}else{
+
+alert("Username หรือ Password ไม่ถูกต้อง");
+
+}
+
+}catch(error){
+
+alert("ไม่สามารถเชื่อมต่อระบบได้");
+
+}
 
 }
 
@@ -159,4 +147,3 @@ location.href="login.html";
 
 </body>
 </html>
-```
