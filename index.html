@@ -1,145 +1,204 @@
 <!DOCTYPE html>
-<html lang="th">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Stock System</title>
+<title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
 
 <style>
 
 body{
-font-family:Arial,sans-serif;
-background:#f4f6f9;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
 margin:0;
+font-family:'Segoe UI',sans-serif;
+background:#f4f6f9;
 }
 
-.login-box{
-width:350px;
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0 4px 20px rgba(0,0,0,.15);
-}
-
-h2{
-text-align:center;
-margin-bottom:20px;
-}
-
-input{
-width:100%;
-padding:12px;
-margin-bottom:12px;
-border:1px solid #ccc;
-border-radius:8px;
-box-sizing:border-box;
-}
-
-button{
-width:100%;
-padding:12px;
+.header{
 background:#1976d2;
 color:white;
+padding:20px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.header h1{
+margin:0;
+font-size:28px;
+}
+
+.logout-btn{
+background:#e53935;
+color:white;
 border:none;
+padding:10px 20px;
 border-radius:8px;
 cursor:pointer;
 font-size:16px;
 }
 
-button:hover{
-background:#1565c0;
+.logout-btn:hover{
+background:#c62828;
+}
+
+.dashboard{
+max-width:1000px;
+margin:60px auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+padding:0 20px;
+}
+
+.card{
+padding:40px;
+border-radius:20px;
+color:white;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.blue{
+
+background:
+linear-gradient(
+135deg,
+#2196f3,
+#1565c0
+);
+
+}
+
+.green{
+
+background:
+linear-gradient(
+135deg,
+#4caf50,
+#2e7d32
+);
+
+}
+
+.card h2{
+
+margin:0;
+font-size:32px;
+
+}
+
+.card p{
+
+margin-top:15px;
+font-size:16px;
+line-height:1.6;
+
+}
+
+.footer{
+
+text-align:center;
+margin-top:50px;
+color:#777;
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="header">
 
-<h2>🔐 เฉพาะเจ้าหน้าที่</h2>
+<h1>
+📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.
+</h1>
 
-<input
-type="text"
-id="user"
-placeholder="Username">
+<button
+class="logout-btn"
+onclick="logout()">
 
-<input
-type="password"
-id="pass"
-placeholder="Password">
+🚪 Logout
 
-<button onclick="login()">
-เข้าสู่ระบบ
 </button>
+
+</div>
+
+
+<div class="dashboard">
+
+<div
+class="card blue"
+onclick="location.href='remain.html'">
+
+<h2>📦 สต๊อกคงเหลือ</h2>
+
+<p>
+
+ตรวจสอบรายการ สป.
+และจำนวนคงเหลือทั้งหมด
+
+</p>
+
+</div>
+
+
+<div
+class="card green"
+onclick="location.href='issue.html'">
+
+<h2>📋 เบิกสินค้า</h2>
+
+<p>
+
+บันทึกรายการเบิก
+และดูประวัติการเบิก
+
+</p>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+Stock Management System v1.0
 
 </div>
 
 <script>
 
-const API =
-"https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
+/* ตรวจสอบสิทธิ์ */
 
-async function login(){
+const auth =
+JSON.parse(
+localStorage.getItem("auth")
+);
 
-const user=
-document.getElementById("user").value.trim();
+if(
+!auth ||
+auth.login!==true
+){
 
-const pass=
-document.getElementById("pass").value.trim();
-
-if(user==="" || pass===""){
-
-alert("กรุณากรอก Username และ Password");
-return;
+location.href="login.html";
 
 }
 
-try{
+/* logout */
 
-const res=await fetch(API,{
-method:"POST",
-body:JSON.stringify({
-
-action:"login",
-username:user,
-password:pass
-
-})
-});
-
-const result=
-(await res.text()).trim();
-
-if(result==="OK"){
+function logout(){
 
 localStorage.clear();
 
-localStorage.setItem(
-"auth",
-JSON.stringify({
-login:true,
-user:user
-})
-);
-
-location.href="index.html";
-
-}else{
-
-alert("Username หรือ Password ไม่ถูกต้อง");
-
-}
-
-}catch(error){
-
-alert("ไม่สามารถเชื่อมต่อระบบได้");
-
-}
+location.href="login.html";
 
 }
 
