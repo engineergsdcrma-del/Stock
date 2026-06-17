@@ -83,14 +83,18 @@ border-bottom:1px solid #ddd;
 
 /* ตรวจสอบ login */
 
-const auth=
+<script>
+
+/* ตรวจสอบสิทธิ์ */
+
+const auth =
 JSON.parse(
 localStorage.getItem("auth")
 );
 
 if(
 !auth ||
-auth.login!==true
+auth.login !== true
 ){
 
 alert(
@@ -100,6 +104,8 @@ alert(
 location.href="login.html";
 
 }
+
+</script>
 
 </script>
 
