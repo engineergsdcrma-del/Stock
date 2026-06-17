@@ -6,88 +6,130 @@
 
 <style>
 
+<style>
+
 body{
-  font-family:Arial;
-  margin:20px;
+font-family:Arial,sans-serif;
+margin:0;
+padding:30px;
+background:#f4f6f9;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
+.container{
+
+max-width:1100px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 3px 15px rgba(0,0,0,.15);
+
 }
 
-th,td{
-  border:1px solid #ddd;
-  padding:8px;
+h1{
+
+margin-bottom:25px;
+
 }
 
-th{
-  background:#2196f3;
-  color:white;
+.top-btn{
+
+margin-bottom:20px;
+
 }
 
 button{
-padding:10px 18px;
+
+padding:10px 20px;
 border:none;
 border-radius:8px;
 cursor:pointer;
 font-weight:bold;
-color:black;
-margin:3px;
-transition:0.3s;
+
 }
 
-button:hover{
-transform:translateY(-2px);
-opacity:0.9;
+.back{
+
+background:#555;
+color:white;
+
 }
 
-.group-btn{
-  background:#eeeeee;
-  color:black;
-  border:none;
-  border-radius:8px;
-  padding:10px 18px;
-  font-weight:bold;
-  margin:4px;
-  cursor:pointer;
-  transition:0.3s;
+.add{
+
+background:#7e57c2;
+color:white;
+
 }
 
-.group-btn:hover{
-  background:#6b8e23;
-  transform:translateY(-2px);
+.filter{
+
+margin:20px 0;
+
 }
 
-.group-btn:active{
-  transform:translateY(0px);
+.filter button{
+
+background:#eee;
+margin-right:10px;
+margin-bottom:10px;
+
 }
 
-.header-bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
+input{
+
+padding:10px;
+width:300px;
+border:1px solid #ccc;
+border-radius:8px;
+margin-top:15px;
+
 }
 
-.dashboard-btn{
-  background:#eeeeee;
-  color:black;
-  border:none;
-  border-radius:8px;
-  padding:10px 18px;
-  font-weight:bold;
-  cursor:pointer;
+table{
+
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+overflow:hidden;
+border-radius:10px;
+
 }
 
-.dashboard-btn:hover{
-  background:#1565c0;
+th{
+
+background:#1e88e5;
+color:white;
+padding:14px;
+
 }
-  
+
+td{
+
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+tr:hover{
+
+background:#f5f5f5;
+
+}
+
+.dashboard{
+
+float:right;
+background:#eee;
+
+}
+
+
 </style>
 </head>
 
 <body>
+  <div class="container">
 
 <div class="header-bar">
 
@@ -271,6 +313,6 @@ document
 
   
 </script>
-
+</div>
 </body>
 </html>
