@@ -1,9 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>ระบบคลังรายการ สป.กยย.สบร.รร.จปร.</title>
 
 <style>
@@ -44,12 +44,10 @@ margin-bottom:40px;
 }
 
 .stock-card{
-
 background:white;
 padding:20px;
 border-radius:15px;
 box-shadow:0 3px 10px rgba(0,0,0,.1);
-
 }
 
 .stock-card h2{
@@ -65,35 +63,28 @@ border-radius:10px;
 }
 
 .login-box{
-
 width:350px;
 background:white;
 padding:30px;
 margin:auto;
 border-radius:15px;
 box-shadow:0 5px 20px rgba(0,0,0,.15);
-
 }
 
 .login-box h2{
-
 text-align:center;
 margin-bottom:20px;
-
 }
 
 input{
-
 width:100%;
 padding:12px;
 margin-bottom:12px;
 border:1px solid #ccc;
 border-radius:8px;
-
 }
 
 button{
-
 width:100%;
 padding:12px;
 background:#1976d2;
@@ -102,7 +93,10 @@ border:none;
 border-radius:8px;
 cursor:pointer;
 font-size:16px;
+}
 
+button:hover{
+background:#1565c0;
 }
 
 </style>
@@ -124,7 +118,6 @@ font-size:16px;
 <div class="dashboard">
 
 <div class="stock-card">
-
 <h2>🏢 บก.</h2>
 
 <div class="item">
@@ -136,52 +129,45 @@ font-size:16px;
 หลอดไฟ<br>
 คงเหลือ 5 ดวง
 </div>
-
-
-
+</div>
 
 <div class="stock-card">
-
 <h2>🏠 อาคาร</h2>
 
 <div class="item">
 ไม้กวาดทางมะพร้าว<br>
 คงเหลือ 4 อัน
 </div>
-
-
+</div>
 
 <div class="stock-card">
-
 <h2>⚡ ไฟฟ้า</h2>
 
 <div class="item">
 สีทาบ้าน RED<br>
 คงเหลือ 5 ถัง
 </div>
-
-
-
+</div>
 
 <div class="stock-card">
-
 <h2>🚰 ประปา</h2>
 
 <div class="item">
 น้ำเสีย<br>
 คงเหลือ 1 ถัง
 </div>
-
+</div>
 
 <div class="stock-card">
-
 <h2>💧 น้ำเสีย</h2>
 
 <div class="item">
 ประปา<br>
 คงเหลือ 2 อัน
 </div>
+</div>
 
+</div>
 
 <div class="login-box">
 
@@ -205,8 +191,7 @@ placeholder="Password">
 
 </div>
 
-
-
+</div>
 
 <script>
 
@@ -215,23 +200,25 @@ const API =
 
 async function login(){
 
-const user =
+const user=
 document.getElementById("user").value.trim();
 
-const pass =
+const pass=
 document.getElementById("pass").value.trim();
 
 if(user==="" || pass===""){
 
-alert("กรุณากรอก Username และ Password");
+alert(
+"กรุณากรอก Username และ Password"
+);
+
 return;
 
 }
 
 try{
 
-const res =
-await fetch(API,{
+const res = await fetch(API,{
 
 method:"POST",
 
@@ -245,10 +232,12 @@ password:pass
 
 });
 
-const result =
+const result=
 (await res.text()).trim();
 
-if(result=="OK"){
+console.log(result);
+
+if(result==="OK"){
 
 localStorage.setItem(
 "auth",
@@ -260,7 +249,8 @@ localStorage.setItem(
 user
 );
 
-location.href="index.html";
+window.location.href=
+"index.html";
 
 }else{
 
@@ -270,11 +260,13 @@ alert(
 
 }
 
-}catch(err){
+}catch(error){
 
-console.log(err);
+console.log(error);
 
-alert("เชื่อมต่อระบบไม่ได้");
+alert(
+"ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
+);
 
 }
 
