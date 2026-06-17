@@ -179,14 +179,13 @@ Stock Management System v1.0
 /* ตรวจสอบสิทธิ์ */
 
 const auth =
-JSON.parse(
-localStorage.getItem("auth")
-);
+localStorage.getItem("auth");
 
-if(
-!auth ||
-auth.login!==true
-){
+if(auth !== "true"){
+
+alert(
+"⛔ รหัสไม่ถูกต้อง\nคุณไม่ใช่เจ้าหน้าที่"
+);
 
 location.href="login.html";
 
