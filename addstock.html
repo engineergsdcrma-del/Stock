@@ -24,11 +24,19 @@ button{
 
 <body>
 
-  <script>
+ <script>
 
-if(localStorage.getItem("login")!="ok"){
+// ตรวจสอบการเข้าสู่ระบบ
+const auth =
+localStorage.getItem("auth");
 
-  location.href="login.html";
+if(auth !== "true"){
+
+alert(
+"⛔ รหัสไม่ถูกต้อง\n\nคุณไม่ใช่เจ้าหน้าที่"
+);
+
+location.href="login.html";
 
 }
 
