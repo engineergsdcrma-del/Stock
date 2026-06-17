@@ -221,13 +221,13 @@ const API =
 
 async function login(){
 
-const user=
+const user =
 document.getElementById("user").value.trim();
 
-const pass=
+const pass =
 document.getElementById("pass").value.trim();
 
-if(user=="" || pass==""){
+if(user==="" || pass===""){
 
 alert("กรุณากรอก Username และ Password");
 return;
@@ -237,23 +237,23 @@ return;
 try{
 
 const res = await fetch(API,{
-
 method:"POST",
-
+headers:{
+"Content-Type":"application/json"
+},
 body:JSON.stringify({
-
 action:"login",
 username:user,
 password:pass
-
 })
-
 });
 
-const result=
+const result =
 await res.text();
 
-if(result=="OK"){
+console.log(result);
+
+if(result.trim()=="OK"){
 
 localStorage.setItem(
 "auth",
@@ -267,12 +267,10 @@ user
 
 location.href="index.html";
 
-location.href="index.html";
-
 }else{
 
 alert(
-"⛔ รหัสไม่ถูกต้อง\nคุณไม่ใช่เจ้าหน้าที่"
+"⛔ รหัสไม่ถูกต้อง\n\nคุณไม่ใช่เจ้าหน้าที่"
 );
 
 }
