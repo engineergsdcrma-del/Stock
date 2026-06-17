@@ -257,11 +257,15 @@ if(result=="OK"){
 
 localStorage.setItem(
 "auth",
-JSON.stringify({
-login:true,
-user:user
-})
+"true"
 );
+
+localStorage.setItem(
+"user",
+user
+);
+
+location.href="index.html";
 
 location.href="index.html";
 
