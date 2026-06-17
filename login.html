@@ -235,22 +235,22 @@ password:pass
 const result=
 (await res.text()).trim();
 
-console.log(result);
-
-if(result==="OK"){
+if(result=="OK"){
 
 localStorage.setItem(
 "auth",
-"true"
-);
+JSON.stringify({
 
-localStorage.setItem(
-"user",
-user
+login:true,
+user:user
+
+})
 );
 
 window.location.href=
 "index.html";
+
+}
 
 }else{
 
