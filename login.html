@@ -216,14 +216,10 @@ placeholder="Password">
 
 <script>
 
-<script>
-
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
 async function login(){
-
-localStorage.removeItem("auth");
 
 const user=
 document.getElementById("user").value.trim();
@@ -255,17 +251,15 @@ password:pass
 });
 
 const result=
-(await res.text()).trim();
+await res.text();
 
-if(result==="OK"){
+if(result=="OK"){
 
 localStorage.setItem(
 "auth",
 JSON.stringify({
-
 login:true,
 user:user
-
 })
 );
 
@@ -273,20 +267,15 @@ location.href="index.html";
 
 }else{
 
-localStorage.removeItem("auth");
-
 alert(
-"⛔ รหัสไม่ถูกต้อง\n\nคุณไม่ใช่เจ้าหน้าที่"
+"⛔ รหัสไม่ถูกต้อง\nคุณไม่ใช่เจ้าหน้าที่"
 );
-
-document.getElementById("user").value="";
-document.getElementById("pass").value="";
 
 }
 
-}catch(err){
+}catch(error){
 
-localStorage.removeItem("auth");
+console.log(error);
 
 alert("เชื่อมต่อระบบไม่ได้");
 
