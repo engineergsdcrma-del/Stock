@@ -137,7 +137,7 @@ font-size:16px;
 คงเหลือ 5 ดวง
 </div>
 
-</div>
+
 
 
 <div class="stock-card">
@@ -149,7 +149,6 @@ font-size:16px;
 คงเหลือ 4 อัน
 </div>
 
-</div>
 
 
 <div class="stock-card">
@@ -161,7 +160,7 @@ font-size:16px;
 คงเหลือ 5 ถัง
 </div>
 
-</div>
+
 
 
 <div class="stock-card">
@@ -173,7 +172,6 @@ font-size:16px;
 คงเหลือ 1 ถัง
 </div>
 
-</div>
 
 <div class="stock-card">
 
@@ -182,10 +180,6 @@ font-size:16px;
 <div class="item">
 ประปา<br>
 คงเหลือ 2 อัน
-</div>
-
-</div>
-
 </div>
 
 
@@ -241,10 +235,6 @@ await fetch(API,{
 
 method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
-
 body:JSON.stringify({
 
 action:"login",
@@ -258,8 +248,6 @@ password:pass
 const result =
 (await res.text()).trim();
 
-console.log(result);
-
 if(result=="OK"){
 
 localStorage.setItem(
@@ -272,8 +260,7 @@ localStorage.setItem(
 user
 );
 
-window.location.href=
-"index.html";
+location.href="index.html";
 
 }else{
 
@@ -287,9 +274,7 @@ alert(
 
 console.log(err);
 
-alert(
-"เชื่อมต่อระบบไม่ได้"
-);
+alert("เชื่อมต่อระบบไม่ได้");
 
 }
 
