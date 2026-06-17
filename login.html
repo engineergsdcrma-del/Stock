@@ -211,7 +211,7 @@ placeholder="Password">
 
 </div>
 
-</div>
+
 
 
 <script>
@@ -236,24 +236,31 @@ return;
 
 try{
 
-const res = await fetch(API,{
+const res =
+await fetch(API,{
+
 method:"POST",
+
 headers:{
 "Content-Type":"application/json"
 },
+
 body:JSON.stringify({
+
 action:"login",
 username:user,
 password:pass
+
 })
+
 });
 
 const result =
-await res.text();
+(await res.text()).trim();
 
 console.log(result);
 
-if(result.trim()=="OK"){
+if(result=="OK"){
 
 localStorage.setItem(
 "auth",
@@ -265,7 +272,8 @@ localStorage.setItem(
 user
 );
 
-location.href="index.html";
+window.location.href=
+"index.html";
 
 }else{
 
@@ -275,11 +283,13 @@ alert(
 
 }
 
-}catch(error){
+}catch(err){
 
-console.log(error);
+console.log(err);
 
-alert("เชื่อมต่อระบบไม่ได้");
+alert(
+"เชื่อมต่อระบบไม่ได้"
+);
 
 }
 
