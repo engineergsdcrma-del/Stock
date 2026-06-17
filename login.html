@@ -129,6 +129,7 @@ background:#1565c0;
 หลอดไฟ<br>
 คงเหลือ 5 ดวง
 </div>
+
 </div>
 
 <div class="stock-card">
@@ -138,6 +139,7 @@ background:#1565c0;
 ไม้กวาดทางมะพร้าว<br>
 คงเหลือ 4 อัน
 </div>
+
 </div>
 
 <div class="stock-card">
@@ -147,6 +149,7 @@ background:#1565c0;
 สีทาบ้าน RED<br>
 คงเหลือ 5 ถัง
 </div>
+
 </div>
 
 <div class="stock-card">
@@ -156,6 +159,7 @@ background:#1565c0;
 น้ำเสีย<br>
 คงเหลือ 1 ถัง
 </div>
+
 </div>
 
 <div class="stock-card">
@@ -165,6 +169,7 @@ background:#1565c0;
 ประปา<br>
 คงเหลือ 2 อัน
 </div>
+
 </div>
 
 </div>
@@ -218,7 +223,8 @@ return;
 
 try{
 
-const res = await fetch(API,{
+const res=
+await fetch(API,{
 
 method:"POST",
 
@@ -235,7 +241,9 @@ password:pass
 const result=
 (await res.text()).trim();
 
-if(result=="OK"){
+console.log(result);
+
+if(result==="OK"){
 
 localStorage.setItem(
 "auth",
@@ -249,8 +257,6 @@ user:user
 
 window.location.href=
 "index.html";
-
-}
 
 }else{
 
