@@ -179,15 +179,17 @@ Stock Management System v1.0
 /* ตรวจสอบสิทธิ์ */
 
 const auth =
-localStorage.getItem("auth");
-
-if(auth !== "true"){
-
-alert(
-"⛔ รหัสไม่ถูกต้อง\nคุณไม่ใช่เจ้าหน้าที่"
+JSON.parse(
+localStorage.getItem("auth")
 );
 
-location.href="login.html";
+if(
+!auth ||
+auth.login !== true
+){
+
+location.href=
+"login.html";
 
 }
 
