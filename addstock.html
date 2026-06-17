@@ -79,9 +79,6 @@ border-bottom:1px solid #ddd;
 
 <body>
 
-<script>
-
-/* ตรวจสอบ login */
 
 <script>
 
@@ -232,6 +229,7 @@ JSON.parse(
 localStorage.getItem("auth")
 );
 
+const res=
 await fetch(API,{
 
 method:"POST",
@@ -240,12 +238,27 @@ body:JSON.stringify({
 
 action:"addstock",
 code:code,
-qty:qty,
+qty:Number(qty),
 user:auth.user
 
 })
 
 });
+
+const result=
+(await res.text()).trim();
+
+if(result=="OK"){
+
+alert("✅ เพิ่มสต๊อกสำเร็จ");
+
+loadHistory();
+
+}else{
+
+alert("❌ บันทึกไม่สำเร็จ");
+
+}
 
 alert("✅ เพิ่มสต๊อกสำเร็จ");
 
