@@ -431,6 +431,34 @@ function searchTable(){
 
 }
 
+const now = new Date();
+
+const currentMonth =
+String(now.getMonth()+1)
+.padStart(2,"0");
+
+const currentYear =
+String(now.getFullYear()+543);
+
+// ตั้งค่าอัตโนมัติ
+document.getElementById(
+"monthFilter"
+).value=currentMonth;
+
+document.getElementById(
+"yearFilter"
+).value=currentYear;
+
+// ล็อคไม่ให้แก้
+document.getElementById(
+"monthFilter"
+).disabled=true;
+
+document.getElementById(
+"yearFilter"
+).disabled=true;
+
+  
   
 // เริ่มต้นระบบ
 loadProducts();
