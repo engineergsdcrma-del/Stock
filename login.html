@@ -16,14 +16,24 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f6f9;
+background:
+linear-gradient(
+135deg,
+#1f3a1f,
+#2e5a2e,
+#4b6f44
+);
+
+min-height:100vh;
+color:white;
 }
 
 .header{
-background:#1976d2;
+background:#2e4d2c;
 color:white;
 padding:25px;
 text-align:center;
+border-bottom:3px solid #8bc34a;
 }
 
 .header h1{
@@ -44,7 +54,9 @@ margin-bottom:40px;
 }
 
 .stock-card{
-background:white;
+background:rgba(255,255,255,.1);
+backdrop-filter:blur(8px);
+color:white;
 padding:20px;
 border-radius:15px;
 box-shadow:0 3px 10px rgba(0,0,0,.1);
@@ -64,11 +76,13 @@ border-radius:10px;
 
 .login-box{
 width:350px;
-background:white;
-padding:30px;
-margin:auto;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.15);
+
+background:
+rgba(255,255,255,.1);
+
+backdrop-filter:blur(10px);
+
+color:white;
 }
 
 .login-box h2{
@@ -87,7 +101,7 @@ border-radius:8px;
 button{
 width:100%;
 padding:12px;
-background:#1976d2;
+background:#4caf50;
 color:white;
 border:none;
 border-radius:8px;
@@ -96,9 +110,34 @@ font-size:16px;
 }
 
 button:hover{
-background:#1565c0;
+background:#66bb6a;
 }
 
+.logo-header{
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:30px;
+margin-bottom:20px;
+flex-wrap:wrap;
+
+}
+
+.logo-header img{
+
+height:100px;
+object-fit:contain;
+transition:.3s;
+
+}
+
+.logo-header img:hover{
+
+transform:scale(1.1);
+
+}
+  
 </style>
 
 </head>
@@ -107,11 +146,22 @@ background:#1565c0;
 
 <div class="header">
 
+<div class="logo-header">
+
+<img src="1.png">
+
+<img src="2.png">
+
+<img src="3.png">
+
+</div>
+
 <h1>
 📦 ระบบคลังรายการ สป.กยย.สบร.รร.จปร.
 </h1>
 
 </div>
+
 
 <div class="container">
 
