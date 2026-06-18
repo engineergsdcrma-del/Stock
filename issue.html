@@ -7,6 +7,24 @@
 
 <style>
 
+  .table-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:15px 0;
+flex-wrap:wrap;
+
+}
+
+.table-header select{
+
+padding:8px;
+border-radius:8px;
+margin-right:10px;
+
+}
+  
 body{
 font-family:Arial,sans-serif;
 margin:0;
@@ -181,6 +199,40 @@ onclick="save()">
 </div>
 
 <h3>📋 ประวัติการเบิก</h3>
+
+<div class="table-header">
+
+<div>
+
+<label>📅 เดือน:</label>
+
+<select id="monthFilter">
+<option value="">ทั้งหมด</option>
+<option value="01">มกราคม</option>
+<option value="02">กุมภาพันธ์</option>
+<option value="03">มีนาคม</option>
+<option value="04">เมษายน</option>
+<option value="05">พฤษภาคม</option>
+<option value="06">มิถุนายน</option>
+<option value="07">กรกฎาคม</option>
+<option value="08">สิงหาคม</option>
+<option value="09">กันยายน</option>
+<option value="10">ตุลาคม</option>
+<option value="11">พฤศจิกายน</option>
+<option value="12">ธันวาคม</option>
+</select>
+
+<label>📆 ปี:</label>
+
+<select id="yearFilter">
+<option value="">ทั้งหมด</option>
+<option value="2569">2569</option>
+<option value="2570">2570</option>
+<option value="2571">2571</option>
+</select>
+
+</div>
+
 
 <input
 type="text"
