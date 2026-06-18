@@ -48,6 +48,15 @@ width:100%;
 .mobile-break{
 display:none;
 }
+
+@media(max-width:768px){
+
+.mobile-break::after{
+content:"";
+display:block;
+}
+
+}
   
 .container{
 max-width:1200px;
@@ -149,7 +158,13 @@ margin:15px auto 30px auto;
 
 }
 
+.logo-header img{
 
+height:90px;
+width:auto;
+object-fit:contain;
+
+}
 
 .logo-header img:hover{
 
@@ -165,11 +180,13 @@ padding:15px;
 
 }
 
-    .header h1{
+.header h1{
 
-font-size:32px;
+font-size:28px;
 line-height:1.6;
 text-align:center;
+
+
 
 }
 
@@ -224,10 +241,9 @@ margin:auto;
 
 <h1>
 📦 ระบบคลังรายการ สป.
-<span class="mobile-break"><br></span>
+<span class="mobile-break"></span>
 กยย.สบร.รร.จปร.
 </h1>
-
 </div>
 
 
