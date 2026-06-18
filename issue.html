@@ -237,7 +237,7 @@ onclick="save()">
 <input
 type="text"
 id="search"
-placeholder="🔍 ค้นหารหัสสินค้า ชื่อสินค้า ผู้เบิก"
+placeholder="🔍 ค้นหารหัสสป. ชื่อสป. ผู้เบิก"
 onkeyup="searchTable()"
 style="
 width:350px;
@@ -272,7 +272,7 @@ async function loadProducts(){
   document.getElementById("code");
 
   select.innerHTML =
-  '<option value="">-- เลือกรหัสสินค้า --</option>';
+  '<option value="">-- เลือกรหัสสป. --</option>';
 
   for(let i=1;i<data.length;i++){
 
