@@ -245,7 +245,7 @@ onclick="saveData()">
 </div>
 
 
-<input
+  <input
 type="text"
 id="search"
 placeholder="🔍 ค้นหารหัสสป. ชื่อสป. ผู้เบิก"
@@ -256,6 +256,8 @@ padding:8px;
 margin:10px 0;
 ">
 
+</div>
+
 <table id="stockTable">
 
 <thead></thead>
@@ -263,6 +265,7 @@ margin:10px 0;
 <tbody></tbody>
 
 </table>
+
 
 <script>
 
@@ -523,9 +526,13 @@ document.querySelectorAll(
 
 rows.forEach(function(row){
 
+if(!row.cells[1]) return;
+
 const date =
 row.cells[1]
 .textContent.trim();
+
+if(date==="") return;
 
 // ตัวอย่าง 10/06/2569
 const parts =
