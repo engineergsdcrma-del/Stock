@@ -321,53 +321,48 @@ document
 });
 
 
-// โหลดประวัติการเบิก
 async function loadData(){
 
-  const response =
-  await fetch(API);
+const response =
+await fetch(API);
 
-  const data =
-  await response.json();
+const data =
+await response.json();
 
-  let head = "<tr>";
+let head = "<tr>";
 
-  data[0].forEach(col=>{
+data[0].forEach(col=>{
 
-    head += `<th>${col}</th>`;
+head += `<th>${col}</th>`;
 
-  });
+});
 
-  head += "</tr>";
+head += "</tr>";
 
-  document.querySelector(
-    "#stockTable thead"
-  ).innerHTML = head;
+document.querySelector(
+"#stockTable thead"
+).innerHTML = head;
 
-  let rows = "";
+let rows = "";
 
-  for(let i=1;i<data.length;i++){
+for(let i=1;i<data.length;i++){
 
-    rows += "<tr>";
+rows += "<tr>";
 
-    data[i].forEach(col=>{
+data[i].forEach(col=>{
 
-      rows += `<td>${col}</td>`;
+rows += `<td>${col}</td>`;
 
-    });
+});
 
-    rows += "</tr>";
-  }
+rows += "</tr>";
 
-  document.querySelector(
-    "#stockTable tbody"
-  ).innerHTML = rows;
 }
 
-  document.querySelector(
+document.querySelector(
 "#stockTable tbody"
 ).innerHTML = rows;
-  
+
 // เปลี่ยนสีตามวันที่
 const tableRows =
 document.querySelectorAll(
@@ -379,31 +374,38 @@ let colorIndex=0;
 
 tableRows.forEach(function(row){
 
-const currentDate=
+const currentDate =
 row.cells[1]
 .textContent.trim();
 
 if(currentDate!==lastDate){
 
 colorIndex++;
-
 lastDate=currentDate;
 
 }
 
 if(colorIndex%2===0){
 
-row.style.background=
+row.style.background =
 "#f1f7ff";
 
 }else{
 
-row.style.background=
+row.style.background =
 "#ffffff";
 
 }
 
 });
+
+// กรองเดือน/ปีหลังโหลดเสร็จ
+filterDate();
+
+}
+
+  
+
 
 // บันทึก
 async function saveData(){
@@ -581,14 +583,15 @@ filterDate
 // โหลดครั้งแรก
 window.onload=function(){
 
-filterDate();
+loadProducts();
+
+loadData();
 
 };
+
   
   
-// เริ่มต้นระบบ
-loadProducts();
-loadData();
+
 
 </script>
 </div>
