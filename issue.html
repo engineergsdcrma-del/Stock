@@ -451,6 +451,88 @@ document.getElementById(
 
 
 
+function filterDate(){
+
+const month =
+document.getElementById(
+"monthFilter"
+).value;
+
+const year =
+document.getElementById(
+"yearFilter"
+).value;
+
+const rows =
+document.querySelectorAll(
+"#stockTable tbody tr"
+);
+
+rows.forEach(function(row){
+
+const date =
+row.cells[1]
+.textContent.trim();
+
+// ตัวอย่าง 10/06/2569
+const parts =
+date.split("/");
+
+if(parts.length<3)return;
+
+const rowMonth =
+parts[1];
+
+const rowYear =
+parts[2];
+
+if(
+
+(month==="" || rowMonth===month)
+
+&&
+
+(year==="" || rowYear===year)
+
+){
+
+row.style.display="";
+
+}else{
+
+row.style.display="none";
+
+}
+
+});
+
+}
+
+
+// เปลี่ยนเดือน
+document
+.getElementById("monthFilter")
+.addEventListener(
+"change",
+filterDate
+);
+
+
+// เปลี่ยนปี
+document
+.getElementById("yearFilter")
+.addEventListener(
+"change",
+filterDate
+);
+
+
+// โหลดครั้งแรก
+window.onload=function(){
+
+filterDate();
+
+};
   
   
 // เริ่มต้นระบบ
