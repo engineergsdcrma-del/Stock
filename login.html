@@ -83,9 +83,21 @@ font-weight:bold;
 
 .login-box{
 
-width:400px;
+width:100%;
+max-width:400px;
 
 margin:50px auto;
+
+background:
+rgba(255,255,255,.12);
+
+backdrop-filter:blur(10px);
+
+padding:25px;
+
+border-radius:20px;
+
+}
 
 background:
 rgba(255,255,255,.12);
@@ -162,6 +174,46 @@ object-fit:contain;
 .logo-header img:hover{
 
 transform:scale(1.1);
+
+}
+
+  @media(max-width:768px){
+
+.container{
+
+padding:15px;
+
+}
+
+.header h1{
+
+font-size:20px;
+
+}
+
+.dashboard{
+
+grid-template-columns:1fr;
+
+}
+
+.logo-header{
+
+gap:10px;
+
+}
+
+.logo-header img{
+
+height:70px;
+
+}
+
+.login-box{
+
+margin:auto;
+
+}
 
 }
   
