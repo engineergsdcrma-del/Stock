@@ -8,41 +8,114 @@
 <style>
 
 body{
-  font-family:Arial,sans-serif;
-  margin:20px;
+font-family:Arial,sans-serif;
+margin:0;
+padding:30px;
+background:#f4f6f9;
 }
 
-input,select{
-  padding:8px;
-  margin:5px;
-  min-width:150px;
+.container{
+
+max-width:1100px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 3px 15px rgba(0,0,0,.15);
+
+}
+
+.header-bar{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+
 }
 
 button{
-  padding:8px 15px;
-  cursor:pointer;
+
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+
 }
 
-.back-btn{
-  background:#2196f3;
-  color:white;
-  border:none;
+.back{
+
+background:#666;
+color:white;
+
+}
+
+.save{
+
+background:#1976d2;
+color:white;
+
+}
+
+input,select{
+
+padding:10px;
+border:1px solid #ccc;
+border-radius:8px;
+margin:5px;
+width:180px;
+
+}
+
+.form-row{
+
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:25px;
+
+}
+
+.search-box{
+
+margin:20px 0;
+
+}
+
+.search-box input{
+
+width:350px;
+
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
-}
 
-th,td{
-  border:1px solid #ddd;
-  padding:8px;
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+
 }
 
 th{
-  background:#2196f3;
-  color:white;
+
+background:#1e88e5;
+color:white;
+padding:12px;
+
+}
+
+td{
+
+padding:10px;
+border-bottom:1px solid #ddd;
+
+}
+
+tr:hover{
+
+background:#f5f5f5;
+
 }
 
 </style>
@@ -51,32 +124,61 @@ th{
 
 <body>
 
-<h1>📋 จำนวนเบิกทั้งหมด</h1>
+  <div class="header-bar">
+
+<h1>📋 เบิกสป. </h1>
 
 <button
-class="back-btn"
+class="back"
 onclick="location.href='index.html'">
-⬅ กลับหน้าหลัก </button>
+
+⬅ กลับหน้าหลัก
+
+</button>
+
+</div>
 
 <hr>
 
+<div class="form-row">
+
 <select id="code">
-<option value="">-- เลือกรหัสสินค้า --</option>
+<option>-- เลือกรหัสสป. --</option>
 </select>
 
-<input id="name" placeholder="ชื่อสินค้า" readonly>
+<input
+id="name"
+placeholder="ชื่อสป.">
 
-<input id="unit" placeholder="หน่วย" readonly>
+<input
+id="unit"
+placeholder="หน่วย">
 
-<input id="remain" placeholder="คงเหลือ" readonly>
+<input
+id="remain"
+placeholder="คงเหลือ">
 
-<input id="qty" placeholder="จำนวน">
+<input
+id="qty"
+placeholder="จำนวน">
 
-<input id="user" placeholder="ผู้เบิก">
+<input
+id="user"
+placeholder="ผู้เบิก">
 
-<input id="place" placeholder="นำไปใช้ที่ไหน">
+<input
+id="place"
+placeholder="นำไปใช้ที่ไหน">
 
-<button onclick="saveData()">บันทึก</button>
+<button
+class="save"
+onclick="save()">
+
+บันทึก
+
+</button>
+
+</div>
 
 <h3>📋 ประวัติการเบิก</h3>
 
@@ -283,6 +385,6 @@ loadProducts();
 loadData();
 
 </script>
-
+</div>
 </body>
 </html>
