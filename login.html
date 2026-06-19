@@ -383,7 +383,7 @@ categoryData[key]="";
 
 for(let i=1;i<data.length;i++){
 
-let code=data[i][0];
+let code=(data[i][0] || "").toString();
 
 let category="";
 
@@ -489,6 +489,94 @@ console.log(error);
 
 }
 
+  // =========================
+// Login
+// =========================
+
+async function login(){
+
+const user =
+document.getElementById(
+"user"
+).value.trim();
+
+const pass =
+document.getElementById(
+"pass"
+).value.trim();
+
+if(
+user==="" ||
+pass===""
+){
+
+alert(
+"กรุณากรอก Username และ Password"
+);
+
+return;
+
+}
+
+try{
+
+const res =
+await fetch(API,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+action:"login",
+username:user,
+password:pass
+
+})
+
+});
+
+const result =
+(await res.text()).trim();
+
+console.log(result);
+
+if(result==="OK"){
+
+localStorage.setItem(
+
+"auth",
+
+JSON.stringify({
+
+login:true,
+user:user
+
+})
+
+);
+
+window.location.href=
+"index.html";
+
+}else{
+
+alert(
+"⛔ รหัสไม่ถูกต้อง"
+);
+
+}
+
+}catch(error){
+
+console.log(error);
+
+alert(
+"ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
+);
+
+}
+
+}
 
 window.onload=()=>{
 
