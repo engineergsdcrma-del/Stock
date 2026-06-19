@@ -6,107 +6,178 @@
 
 <style>
 
-body{
+*{
 margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#f4f6f9;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(
+135deg,
+#1f3a1f,
+#2e5a2e,
+#4b6f44
+);
+
+min-height:100vh;
+color:white;
+
 }
 
 .header{
-background:#1976d2;
-color:white;
+
+background:#2e4d2c;
+
 padding:20px 30px;
+
 display:flex;
 justify-content:space-between;
 align-items:center;
-box-shadow:0 2px 8px rgba(0,0,0,.15);
+
+border-bottom:3px solid #8bc34a;
+
+box-shadow:
+0 4px 15px rgba(0,0,0,.3);
+
 }
 
 .header h1{
-margin:0;
-font-size:28px;
+
+font-size:32px;
+font-weight:bold;
+
 }
 
 .logout-btn{
-background:#e53935;
-color:white;
+
+background:#d32f2f;
 border:none;
-padding:10px 20px;
-border-radius:8px;
+padding:12px 20px;
+color:white;
+border-radius:10px;
 cursor:pointer;
-font-size:16px;
+font-weight:bold;
+
+transition:.3s;
+
 }
 
 .logout-btn:hover{
-background:#c62828;
+
+background:#f44336;
+transform:scale(1.05);
+
 }
 
-.dashboard{
-max-width:1000px;
-margin:60px auto;
+.container{
+
+max-width:1100px;
+margin:auto;
+padding:50px 20px;
+
+}
+
+.menu-grid{
+
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:30px;
-padding:0 20px;
+
+grid-template-columns:
+repeat(auto-fit,minmax(350px,1fr));
+
+gap:35px;
+
 }
 
-.card{
+.menu-card{
+
+background:
+rgba(255,255,255,.1);
+
+backdrop-filter:
+blur(10px);
+
 padding:40px;
-border-radius:20px;
-color:white;
+
+border-radius:25px;
+
+text-align:center;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.3);
+
 cursor:pointer;
-transition:.3s;
-box-shadow:0 5px 15px rgba(0,0,0,.15);
-}
 
-.card:hover{
-
-transform:translateY(-8px);
+transition:.4s;
 
 }
 
-.blue{
+.menu-card:hover{
+
+transform:
+translateY(-10px);
 
 background:
-linear-gradient(
-135deg,
-#2196f3,
-#1565c0
-);
+rgba(255,255,255,.15);
 
 }
 
-.green{
+.menu-card h2{
 
-background:
-linear-gradient(
-135deg,
-#4caf50,
-#2e7d32
-);
+font-size:38px;
+margin-bottom:15px;
 
 }
 
-.card h2{
+.menu-card p{
 
-margin:0;
-font-size:32px;
-
-}
-
-.card p{
-
-margin-top:15px;
-font-size:16px;
-line-height:1.6;
+font-size:18px;
+line-height:1.7;
 
 }
 
 .footer{
 
+margin-top:60px;
+
 text-align:center;
-margin-top:50px;
-color:#777;
+
+color:#ddd;
+
+font-size:14px;
+
+}
+
+@media(max-width:768px){
+
+.header{
+
+flex-direction:column;
+gap:15px;
+
+}
+
+.header h1{
+
+font-size:24px;
+text-align:center;
+
+}
+
+.menu-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.menu-card{
+
+padding:30px;
+
+}
 
 }
 
@@ -133,10 +204,11 @@ onclick="logout()">
 </div>
 
 
-<div class="dashboard">
+<div class="container">
+<div class="menu-grid">
 
 <div
-class="card blue"
+class="menu-card"
 onclick="location.href='remain.html'">
 
 <h2>📦 สต๊อกคงเหลือ</h2>
@@ -152,9 +224,9 @@ onclick="location.href='remain.html'">
 
 
 <div
-class="card green"
+class="menu-card"
 onclick="location.href='issue.html'">
-
+  
 <h2>📋 เบิกสป.</h2>
 
 <p>
@@ -168,9 +240,10 @@ onclick="location.href='issue.html'">
 
 </div>
 
-<div class="footer">
+</div>
+</div>
 
-Stock Management System v1.0
+<div class="footer">
 
 </div>
 
