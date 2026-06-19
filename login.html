@@ -382,8 +382,24 @@ categoryData[key]="";
 
 for(let i=1;i<data.length;i++){
 
-const category=
-data[i][0];
+let code=data[i][0];
+
+let category="";
+
+if(code.startsWith("A"))
+category="บก.";
+
+else if(code.startsWith("B"))
+category="อาคาร";
+
+else if(code.startsWith("C"))
+category="ไฟฟ้า";
+
+else if(code.startsWith("D"))
+category="ประปา";
+
+else if(code.startsWith("E"))
+category="น้ำเสีย";
 
 const name=
 data[i][1];
