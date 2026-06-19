@@ -344,13 +344,9 @@ placeholder="Password">
 
 <script>
 
-const API =
+const API=
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
-
-// =========================
-// โหลด Dashboard Realtime
-// =========================
 
 async function loadDashboard(){
 
@@ -362,62 +358,64 @@ await fetch(API+"?type=products");
 const data=
 await res.json();
 
-let alertText="";
-
 let dashboardHTML="";
 
-const groups={};
+let groups={
+
+"บก.":"🏢",
+"อาคาร":"🏠",
+"ไฟฟ้า":"⚡",
+"ประปา":"🚰",
+"น้ำเสีย":"💧"
+
+};
+
+
+let categoryData={};
+
+for(let key in groups){
+
+categoryData[key]="";
+
+}
+
 
 for(let i=1;i<data.length;i++){
 
 const category=
 data[i][0];
 
-const item=
+const name=
 data[i][1];
 
+const unit=
+data[i][2];
+
 const remain=
-Number(data[i][3]);
+data[i][3];
 
 
-// แจ้งเตือนของใกล้หมด
-
-if(remain<=5){
-
-alertText +=
-"⚠️ "+
-item+
-" เหลือ "+
-remain+
-" ชิ้น<br>";
-
-}
-
-
-// จัดกลุ่มหมวด
-
-if(!groups[category]){
-
-groups[category]="";
-
-}
-
-groups[category]+=`
+const item=`
 
 <div class="item">
 
-${item}<br>
+${name}<br>
 
-คงเหลือ ${remain} ชิ้น
+คงเหลือ ${remain} ${unit}
 
 </div>
 
 `;
 
+
+if(categoryData[category]!==undefined){
+
+categoryData[category]+=item;
+
 }
 
+}
 
-// สร้างการ์ด Dashboard
 
 for(let category in groups){
 
@@ -425,9 +423,14 @@ dashboardHTML += `
 
 <div class="stock-card">
 
-<h2>${category}</h2>
+<h2>
 
 ${groups[category]}
+${category}
+
+</h2>
+
+${categoryData[category] || "ไม่มีข้อมูล"}
 
 </div>
 
@@ -436,125 +439,20 @@ ${groups[category]}
 }
 
 
-// แสดงผล
-
 document.getElementById(
 "dashboard"
 ).innerHTML=
 dashboardHTML;
 
-document.getElementById(
-"alertBox"
-).innerHTML=
-alertText ||
-"✅ ไม่มีรายการแจ้งเตือน";
-
-
-}catch(error){
-
-console.log(
-"Dashboard Error:",
-error
-);
-
-}
-
-}
-
-
-
-// =========================
-// Login
-// =========================
-
-async function login(){
-
-const user=
-document.getElementById(
-"user"
-).value.trim();
-
-const pass=
-document.getElementById(
-"pass"
-).value.trim();
-
-if(
-user==="" ||
-pass===""
-){
-
-alert(
-"กรุณากรอก Username และ Password"
-);
-
-return;
-
-}
-
-try{
-
-const res=
-await fetch(API,{
-
-method:"POST",
-
-body:JSON.stringify({
-
-action:"login",
-username:user,
-password:pass
-
-})
-
-});
-
-const result=
-(await res.text()).trim();
-
-if(result==="OK"){
-
-localStorage.setItem(
-
-"auth",
-
-JSON.stringify({
-
-login:true,
-user:user
-
-})
-
-);
-
-window.location.href=
-"index.html";
-
-}else{
-
-alert(
-"⛔ รหัสไม่ถูกต้อง"
-);
-
-}
 
 }catch(error){
 
 console.log(error);
 
-alert(
-"ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
-);
-
 }
 
 }
 
-
-
-// =========================
-// เริ่มทำงาน
-// =========================
 
 window.onload=()=>{
 
@@ -569,7 +467,6 @@ loadDashboard();
 };
 
 </script>
-  
 
 </body>
 </html>
