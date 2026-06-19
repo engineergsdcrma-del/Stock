@@ -401,34 +401,26 @@ const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
 
-// =======================
-// Dashboard สรุปข้อมูล
-// =======================
+// =========================
+// โหลด Dashboard
+// =========================
 
 async function loadDashboard(){
 
 try{
 
-const res=
-await fetch(API+"?action=getProducts");
+const res =
+await fetch(API+"?type=products");
 
-const data=
+const data =
 await res.json();
-
-if(!Array.isArray(data)){
-
-console.log("ไม่มีข้อมูล");
-
-return;
-
-}
 
 let alertText="";
 
 for(let i=1;i<data.length;i++){
 
-const remain=
-Number(data[i][2]);
+const remain =
+Number(data[i][3]);
 
 if(remain<=5){
 
@@ -446,24 +438,9 @@ remain+
 document.getElementById(
 "alertBox"
 ).innerHTML=
-alertText || "✅ ไม่มีรายการแจ้งเตือน";
 
-}catch(error){
-
-console.log(
-"Dashboard Error:",
-error
-);
-
-}
-
-}
-
-
-document.getElementById(
-"alertBox"
-).innerHTML=
-alertText || "✅ ไม่มีรายการแจ้งเตือน";
+alertText ||
+"✅ ไม่มีรายการแจ้งเตือน";
 
 }catch(error){
 
@@ -478,19 +455,22 @@ error
 
 
 
-// =======================
+// =========================
 // Login
-// =======================
+// =========================
 
 async function login(){
 
-const user=
-document.getElementById("user")
-.value.trim();
+const user =
+document.getElementById(
+"user"
+).value.trim();
 
-const pass=
-document.getElementById("pass")
-.value.trim();
+const pass =
+document.getElementById(
+"pass"
+).value.trim();
+
 
 if(
 user==="" ||
@@ -505,9 +485,10 @@ return;
 
 }
 
+
 try{
 
-const res=
+const res =
 await fetch(API,{
 
 method:"POST",
@@ -515,19 +496,16 @@ method:"POST",
 body:JSON.stringify({
 
 action:"login",
-
 username:user,
-
 password:pass
 
 })
 
 });
 
-const result=
+const result =
 (await res.text()).trim();
 
-console.log(result);
 
 if(result==="OK"){
 
@@ -538,7 +516,6 @@ localStorage.setItem(
 JSON.stringify({
 
 login:true,
-
 user:user
 
 })
@@ -551,9 +528,7 @@ window.location.href=
 }else{
 
 alert(
-
-"⛔ รหัสไม่ถูกต้อง\n\nคุณไม่ใช่เจ้าหน้าที่"
-
+"⛔ รหัสไม่ถูกต้อง"
 );
 
 }
@@ -570,19 +545,19 @@ alert(
 
 }
 
-window.onload=function(){
+
+
+// =========================
+// เริ่มโหลด
+// =========================
+
+window.onload=()=>{
 
 loadDashboard();
 
-setInterval(
-loadDashboard,
-10000
-);
-
 };
-  
-</script>
 
+</script>
 
 
 </body>
