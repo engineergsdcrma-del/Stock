@@ -423,7 +423,7 @@ let alertText="";
 for(let i=1;i<data.length;i++){
 
 const remain=
-Number(data[i][3]);
+Number(data[i][2]);
 
 if(remain<=5){
 
@@ -552,15 +552,19 @@ alert(
 
 }
 
-
-
-// =======================
-// โหลดหน้า
-// =======================
-
 window.onload=function(){
 
 loadDashboard();
+
+/* รีเฟรชทุก 10 วินาที */
+setInterval(
+loadDashboard,
+10000
+);
+
+};
+
+
 
 };
 
