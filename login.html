@@ -378,20 +378,96 @@ placeholder="Password">
 
 </div>
 
+```html
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 
+
+// =======================
+// Dashboard สรุปข้อมูล
+// =======================
+
+async function loadDashboard(){
+
+try{
+
+const res=
+await fetch(API+"?type=products");
+
+const data=
+await res.json();
+
+let total=data.length-1;
+let low=0;
+
+let alertText="";
+
+for(let i=1;i<data.length;i++){
+
+const remain=
+Number(data[i][3]);
+
+if(remain<=5){
+
+low++;
+
+alertText +=
+"⚠️ "+
+data[i][1]+
+" เหลือ "+
+remain+
+" ชิ้น<br>";
+
+}
+
+}
+
+document.getElementById(
+"totalItems"
+).innerHTML=total;
+
+document.getElementById(
+"lowStock"
+).innerHTML=low;
+
+document.getElementById(
+"alertBox"
+).innerHTML=
+alertText || "✅ ไม่มีรายการแจ้งเตือน";
+
+}catch(error){
+
+console.log(
+"Dashboard Error:",
+error
+);
+
+}
+
+}
+
+
+
+// =======================
+// Login
+// =======================
+
 async function login(){
 
 const user=
-document.getElementById("user").value.trim();
+document.getElementById("user")
+.value.trim();
 
 const pass=
-document.getElementById("pass").value.trim();
+document.getElementById("pass")
+.value.trim();
 
-if(user==="" || pass===""){
+if(
+user==="" ||
+pass===""
+){
 
 alert(
 "กรุณากรอก Username และ Password"
@@ -411,7 +487,9 @@ method:"POST",
 body:JSON.stringify({
 
 action:"login",
+
 username:user,
+
 password:pass
 
 })
@@ -423,16 +501,20 @@ const result=
 
 console.log(result);
 
-if(result=="OK"){
+if(result==="OK"){
 
 localStorage.setItem(
+
 "auth",
+
 JSON.stringify({
 
 login:true,
+
 user:user
 
 })
+
 );
 
 window.location.href=
@@ -441,7 +523,9 @@ window.location.href=
 }else{
 
 alert(
+
 "⛔ รหัสไม่ถูกต้อง\n\nคุณไม่ใช่เจ้าหน้าที่"
+
 );
 
 }
@@ -458,7 +542,21 @@ alert(
 
 }
 
+
+
+// =======================
+// โหลดหน้า
+// =======================
+
+window.onload=function(){
+
+loadDashboard();
+
+};
+
 </script>
+```
+
 
 </body>
 </html>
