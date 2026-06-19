@@ -349,45 +349,106 @@ const API =
 
 
 // =========================
-// โหลด Dashboard
+// โหลด Dashboard Realtime
 // =========================
 
 async function loadDashboard(){
 
 try{
 
-const res =
+const res=
 await fetch(API+"?type=products");
 
-const data =
+const data=
 await res.json();
 
 let alertText="";
 
+let dashboardHTML="";
+
+const groups={};
+
 for(let i=1;i<data.length;i++){
 
-const remain =
+const category=
+data[i][0];
+
+const item=
+data[i][1];
+
+const remain=
 Number(data[i][3]);
+
+
+// แจ้งเตือนของใกล้หมด
 
 if(remain<=5){
 
 alertText +=
 "⚠️ "+
-data[i][1]+
+item+
 " เหลือ "+
 remain+
 " ชิ้น<br>";
 
 }
 
+
+// จัดกลุ่มหมวด
+
+if(!groups[category]){
+
+groups[category]="";
+
 }
+
+groups[category]+=`
+
+<div class="item">
+
+${item}<br>
+
+คงเหลือ ${remain} ชิ้น
+
+</div>
+
+`;
+
+}
+
+
+// สร้างการ์ด Dashboard
+
+for(let category in groups){
+
+dashboardHTML += `
+
+<div class="stock-card">
+
+<h2>${category}</h2>
+
+${groups[category]}
+
+</div>
+
+`;
+
+}
+
+
+// แสดงผล
+
+document.getElementById(
+"dashboard"
+).innerHTML=
+dashboardHTML;
 
 document.getElementById(
 "alertBox"
 ).innerHTML=
-
 alertText ||
 "✅ ไม่มีรายการแจ้งเตือน";
+
 
 }catch(error){
 
@@ -408,16 +469,15 @@ error
 
 async function login(){
 
-const user =
+const user=
 document.getElementById(
 "user"
 ).value.trim();
 
-const pass =
+const pass=
 document.getElementById(
 "pass"
 ).value.trim();
-
 
 if(
 user==="" ||
@@ -432,10 +492,9 @@ return;
 
 }
 
-
 try{
 
-const res =
+const res=
 await fetch(API,{
 
 method:"POST",
@@ -450,9 +509,8 @@ password:pass
 
 });
 
-const result =
+const result=
 (await res.text()).trim();
-
 
 if(result==="OK"){
 
@@ -495,17 +553,23 @@ alert(
 
 
 // =========================
-// เริ่มโหลด
+// เริ่มทำงาน
 // =========================
 
 window.onload=()=>{
 
 loadDashboard();
 
+setInterval(()=>{
+
+loadDashboard();
+
+},10000);
+
 };
 
 </script>
-
+  
 
 </body>
 </html>
