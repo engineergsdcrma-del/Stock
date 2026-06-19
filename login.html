@@ -94,15 +94,7 @@ margin-bottom:30px;
 
 }
 
-#totalItems,
-#lowStock{
 
-font-size:40px;
-font-weight:bold;
-text-align:center;
-margin-top:20px;
-
-}
 
 #alertBox{
 
@@ -274,20 +266,15 @@ margin:auto;
 <div class="dashboard-summary">
 
 <div class="stock-card">
-<h2>📦 จำนวนรายการทั้งหมด</h2>
-<div id="totalItems">0</div>
-</div>
 
-<div class="stock-card">
-<h2>⚠️ ของใกล้หมด</h2>
-<div id="lowStock">0</div>
-</div>
+<h2>🚨 แจ้งเตือนของใกล้หมด</h2>
 
-<div class="stock-card">
-<h2>🚨 แจ้งเตือน</h2>
 <div id="alertBox">
+
 ไม่มีรายการแจ้งเตือน
+
 </div>
+
 </div>
 
 </div>
@@ -424,13 +411,7 @@ remain+
 
 }
 
-document.getElementById(
-"totalItems"
-).innerHTML=total;
 
-document.getElementById(
-"lowStock"
-).innerHTML=low;
 
 document.getElementById(
 "alertBox"
