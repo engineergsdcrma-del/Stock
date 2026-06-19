@@ -410,13 +410,18 @@ async function loadDashboard(){
 try{
 
 const res=
-await fetch(API+"?type=products");
+await fetch(API+"?action=getProducts");
 
 const data=
 await res.json();
 
-let total=data.length-1;
-let low=0;
+if(!Array.isArray(data)){
+
+console.log("ไม่มีข้อมูล");
+
+return;
+
+}
 
 let alertText="";
 
@@ -426,8 +431,6 @@ const remain=
 Number(data[i][2]);
 
 if(remain<=5){
-
-low++;
 
 alertText +=
 "⚠️ "+
@@ -440,6 +443,21 @@ remain+
 
 }
 
+document.getElementById(
+"alertBox"
+).innerHTML=
+alertText || "✅ ไม่มีรายการแจ้งเตือน";
+
+}catch(error){
+
+console.log(
+"Dashboard Error:",
+error
+);
+
+}
+
+}
 
 
 document.getElementById(
@@ -556,18 +574,13 @@ window.onload=function(){
 
 loadDashboard();
 
-/* รีเฟรชทุก 10 วินาที */
 setInterval(
 loadDashboard,
 10000
 );
 
 };
-
-
-
-};
-
+  
 </script>
 
 
