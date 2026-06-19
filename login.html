@@ -359,6 +359,7 @@ const data=
 await res.json();
 
 let dashboardHTML="";
+let alertText="";
 
 let groups={
 
@@ -413,6 +414,7 @@ parseInt(data[i][3]) || 0;
 
 const item=`
 
+
 <div class="item">
 
 ${name}<br>
@@ -423,6 +425,18 @@ ${name}<br>
 
 `;
 
+  if(remain<=5){
+
+alertText +=
+"⚠️ "+
+name+
+" เหลือ "+
+remain+
+" "+
+unit+
+"<br>";
+
+}
 
 if(categoryData[category]!==undefined){
 
@@ -459,6 +473,12 @@ document.getElementById(
 "dashboard"
 ).innerHTML=
 dashboardHTML;
+
+  document.getElementById(
+"alertBox"
+).innerHTML=
+alertText ||
+"✅ ไม่มีรายการแจ้งเตือน";
 
 
 }catch(error){
