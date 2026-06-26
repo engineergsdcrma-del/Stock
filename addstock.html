@@ -212,24 +212,39 @@ ${data[i][1]}
 
 async function saveStock(){
 
+if(isSaving) return;
+
 const code=
 document.getElementById("code").value;
 
 const qty=
 document.getElementById("qty").value;
 
-if(!code||!qty){
+if(!code || !qty){
 
 alert("กรุณากรอกข้อมูล");
-
 return;
 
 }
+
+isSaving=true;
+
+const btn=
+document.getElementById(
+"saveBtn"
+);
+
+btn.disabled=true;
+
+btn.innerHTML=
+"กำลังบันทึก...";
 
 const auth=
 JSON.parse(
 localStorage.getItem("auth")
 );
+
+try{
 
 const res=
 await fetch(API,{
@@ -252,19 +267,43 @@ const result=
 
 if(result=="OK"){
 
-alert("✅ เพิ่มสต๊อกสำเร็จ");
+alert(
+"✅ เพิ่มสต๊อกสำเร็จ"
+);
 
-loadHistory();
+location.reload();
 
 }else{
 
-alert("❌ บันทึกไม่สำเร็จ");
+alert(
+"❌ บันทึกไม่สำเร็จ"
+);
+
+isSaving=false;
+
+btn.disabled=false;
+
+btn.innerHTML=
+"บันทึก";
 
 }
 
-alert("✅ เพิ่มสต๊อกสำเร็จ");
+}catch(error){
 
-location.reload();
+console.log(error);
+
+alert(
+"❌ เกิดข้อผิดพลาด"
+);
+
+isSaving=false;
+
+btn.disabled=false;
+
+btn.innerHTML=
+"บันทึก";
+
+}
 
 }
 
