@@ -200,6 +200,7 @@ id="place"
 placeholder="นำไปใช้ที่ไหน">
 
 <button
+id="saveBtn"
 class="save"
 onclick="saveData()">
 
@@ -411,54 +412,113 @@ filterDate();
 
 
 // บันทึก
+let isSaving=false;
+
 async function saveData(){
 
-  const remain =
-  Number(document.getElementById("remain").value);
+if(isSaving) return;
 
-  const qty =
-  Number(document.getElementById("qty").value);
+const remain=
+Number(
+document.getElementById("remain").value
+);
 
-  if(qty > remain){
+const qty=
+Number(
+document.getElementById("qty").value
+);
 
-    alert("จำนวนเบิกมากกว่าคงเหลือ");
+if(qty>remain){
 
-    return;
-  }
+alert(
+"จำนวนเบิกมากกว่าคงเหลือ"
+);
 
-  const bodyData = {
+return;
 
-    code:
-    document.getElementById("code").value,
+}
 
-    qty:
-    document.getElementById("qty").value,
+const code=
+document.getElementById("code").value;
 
-    user:
-    document.getElementById("user").value,
+const user=
+document.getElementById("user").value;
 
-    place:
-    document.getElementById("place").value
+const place=
+document.getElementById("place").value;
 
-  };
+if(
+!code||
+!qty||
+!user||
+!place
+){
 
-  await fetch(API,{
+alert(
+"กรอกข้อมูลให้ครบ"
+);
 
-    method:"POST",
+return;
 
-    mode:"no-cors",
+}
 
-    body:JSON.stringify(bodyData)
+isSaving=true;
 
-  });
+const btn=
+document.getElementById(
+"saveBtn"
+);
 
-  alert("บันทึกสำเร็จ");
+btn.disabled=true;
 
-  setTimeout(()=>{
+btn.innerHTML=
+"กำลังบันทึก...";
 
-    location.reload();
+try{
 
-  },1000);
+const bodyData={
+
+code:code,
+qty:qty,
+user:user,
+place:place
+
+};
+
+await fetch(API,{
+
+method:"POST",
+mode:"no-cors",
+body:JSON.stringify(bodyData)
+
+});
+
+alert(
+"✅ บันทึกสำเร็จ"
+);
+
+setTimeout(()=>{
+
+location.reload();
+
+},1000);
+
+}catch(error){
+
+alert(
+"❌ เกิดข้อผิดพลาด"
+);
+
+console.log(error);
+
+btn.disabled=false;
+
+btn.innerHTML=
+"บันทึก";
+
+isSaving=false;
+
+}
 
 }
 
