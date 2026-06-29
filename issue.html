@@ -355,17 +355,31 @@ document
 
 });
 
-
-
-
 function addItem(){
 
-
+const code=
+document.getElementById("code").value;
 
 const name=
 document.getElementById("name").value;
 
+const qty=
+document.getElementById("qty").value;
 
+  const remain=
+Number(
+document.getElementById("remain").value
+);
+
+if(Number(qty)>remain){
+
+alert(
+"จำนวนเบิกมากกว่าคงเหลือ"
+);
+
+return;
+
+}
 
 if(!code || !qty){
 
@@ -376,6 +390,10 @@ alert(
 return;
 
 }
+
+
+
+
 
 issueItems.push({
 
@@ -552,25 +570,7 @@ async function saveData(){
 
 if(isSaving) return;
 
-const remain=
-Number(
-document.getElementById("remain").value
-);
 
-const qty=
-Number(
-document.getElementById("qty").value
-);
-
-if(qty>remain){
-
-alert(
-"จำนวนเบิกมากกว่าคงเหลือ"
-);
-
-return;
-
-}
 
 const code=
 document.getElementById("code").value;
@@ -595,13 +595,8 @@ return;
 
 }
 
-alert(
-"กรอกข้อมูลให้ครบ"
-);
 
-return;
 
-}
 
 isSaving=true;
 
@@ -638,13 +633,6 @@ body:JSON.stringify(bodyData)
 
 }
 
-await fetch(API,{
-
-method:"POST",
-mode:"no-cors",
-body:JSON.stringify(bodyData)
-
-});
 
 alert(
 "✅ บันทึกสำเร็จ"
