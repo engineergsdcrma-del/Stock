@@ -191,13 +191,6 @@ placeholder="คงเหลือ">
 id="qty"
 placeholder="จำนวน">
 
-<input
-id="user"
-placeholder="ผู้เบิก">
-
-<input
-id="place"
-placeholder="นำไปใช้ที่ไหน">
 
 
 <button
@@ -362,40 +355,17 @@ document
 
 });
 
-function addItem(){
 
-const code=
-document.getElementById("code").value;
 
-const qty=
-document.getElementById("qty").value;
-
-if(!code || !qty){
-
-alert(
-"กรุณาเลือกสินค้าและจำนวน"
-);
-
-return;
-
-}
-
-alert(
-"เพิ่มรายการแล้ว"
-);
-
-}
 
 function addItem(){
 
-const code=
-document.getElementById("code").value;
+
 
 const name=
 document.getElementById("name").value;
 
-const qty=
-document.getElementById("qty").value;
+
 
 if(!code || !qty){
 
@@ -612,11 +582,18 @@ const place=
 document.getElementById("place").value;
 
 if(
-!code||
-!qty||
+issueItems.length===0||
 !user||
 !place
 ){
+
+alert(
+"กรอกข้อมูลให้ครบ"
+);
+
+return;
+
+}
 
 alert(
 "กรอกข้อมูลให้ครบ"
@@ -640,14 +617,26 @@ btn.innerHTML=
 
 try{
 
+for(let item of issueItems){
+
 const bodyData={
 
-code:code,
-qty:qty,
+code:item.code,
+qty:item.qty,
 user:user,
 place:place
 
 };
+
+await fetch(API,{
+
+method:"POST",
+mode:"no-cors",
+body:JSON.stringify(bodyData)
+
+});
+
+}
 
 await fetch(API,{
 
