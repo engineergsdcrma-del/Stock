@@ -200,11 +200,18 @@ id="place"
 placeholder="นำไปใช้ที่ไหน">
 
 <button
+onclick="addItem()">
+
+➕ เพิ่มรายการ
+
+</button>
+
+<button
 id="saveBtn"
 class="save"
 onclick="saveData()">
 
-บันทึก
+💾 บันทึก
 
 </button>
 
@@ -324,7 +331,31 @@ document
 
 });
 
+function addItem(){
 
+const code=
+document.getElementById("code").value;
+
+const qty=
+document.getElementById("qty").value;
+
+if(!code || !qty){
+
+alert(
+"กรุณาเลือกสินค้าและจำนวน"
+);
+
+return;
+
+}
+
+alert(
+"เพิ่มรายการแล้ว"
+);
+
+}
+
+  
 async function loadData(){
 
 const response =
@@ -661,6 +692,6 @@ loadData();
 
 
 </script>
-</div>
+
 </body>
 </html>
