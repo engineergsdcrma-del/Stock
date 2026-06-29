@@ -207,6 +207,42 @@ onclick="addItem()">
 </button>
 
 <button
+onclick="addItem()">
+
+➕ เพิ่มรายการ
+
+</button>
+
+<div id="selectedItems"
+style="
+width:100%;
+margin-top:15px;
+padding:10px;
+background:#f5f5f5;
+border-radius:10px;
+">
+
+<b>รายการที่เลือก</b>
+
+<div id="itemList">
+
+ยังไม่มีรายการ
+
+</div>
+
+</div>
+
+<br>
+
+<input
+id="user"
+placeholder="ผู้เบิก">
+
+<input
+id="place"
+placeholder="นำไปใช้ที่ไหน">
+
+<button
 id="saveBtn"
 class="save"
 onclick="saveData()">
@@ -216,6 +252,7 @@ onclick="saveData()">
 </button>
 
 </div>
+  
 
 <h3>📋 ประวัติการเบิก</h3>
 
@@ -279,7 +316,7 @@ margin:10px 0;
 
 const API =
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
-
+let issueItems=[];
 
 // โหลดสินค้า
 async function loadProducts(){
@@ -352,6 +389,108 @@ return;
 alert(
 "เพิ่มรายการแล้ว"
 );
+
+}
+
+function addItem(){
+
+const code=
+document.getElementById("code").value;
+
+const name=
+document.getElementById("name").value;
+
+const qty=
+document.getElementById("qty").value;
+
+if(!code || !qty){
+
+alert(
+"กรุณาเลือกสินค้าและจำนวน"
+);
+
+return;
+
+}
+
+issueItems.push({
+
+code:code,
+name:name,
+qty:qty
+
+});
+
+showItems();
+
+document.getElementById(
+"qty"
+).value="";
+
+}
+
+
+function showItems(){
+
+let html="";
+
+if(issueItems.length===0){
+
+html="ยังไม่มีรายการ";
+
+}else{
+
+issueItems.forEach((item,index)=>{
+
+html+=`
+
+<div style="
+padding:8px;
+margin:5px;
+background:white;
+border-radius:8px;
+">
+
+- ${item.name}
+
+จำนวน ${item.qty}
+
+<button
+onclick="removeItem(${index})"
+style="
+float:right;
+background:red;
+color:white;
+">
+
+ลบ
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+document.getElementById(
+"itemList"
+).innerHTML=
+html;
+
+}
+
+
+function removeItem(index){
+
+issueItems.splice(
+index,
+1
+);
+
+showItems();
 
 }
 
