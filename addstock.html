@@ -250,10 +250,20 @@ API+"?type=products"
 const data=
 await res.json();
 
+async function loadProducts(){
+
+const res=
+await fetch(
+API+"?type=products"
+);
+
+const data=
+await res.json();
+
 const select=
 document.getElementById("code");
 
-.getElementById("monthFilter")
+for(let i=1;i<data.length;i++){
 
 select.innerHTML+=`
 
@@ -476,7 +486,9 @@ const rowMonth=
 parts[1];
 
 const rowYear=
-parts[2];
+String(
+Number(parts[2])+543
+);
 
 if(
 
@@ -523,6 +535,8 @@ document.getElementById(
 document.getElementById(
 "yearFilter"
 ).value=currentYear;
+
+filterDate();
 
 document
 .getElementById("search")
