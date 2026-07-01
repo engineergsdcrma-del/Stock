@@ -253,7 +253,7 @@ await res.json();
 const select=
 document.getElementById("code");
 
-for(let i=1;i<data.length;i++){
+.getElementById("monthFilter")
 
 select.innerHTML+=`
 
@@ -405,8 +405,9 @@ table.innerHTML+=`
 
 }
 
-}
+filterDate();
 
+}
 function searchTable(){
 
 const keyword=
@@ -530,19 +531,7 @@ document
 searchTable
 );
 
-document
-.getElementById("monthFilter")
-.addEventListener(
-"change",
-filterDate
-);
 
-document
-.getElementById("yearFilter")
-.addEventListener(
-"change",
-filterDate
-);
 
 </script>
 
