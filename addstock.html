@@ -253,22 +253,7 @@ await res.json();
 const select=
 document.getElementById("code");
 
-for(let i=1;i<data.length;i++){
 
-select.innerHTML+=`
-
-<option value="${data[i][0]}">
-
-${data[i][0]} -
-${data[i][1]}
-
-</option>
-
-`;
-
-}
-
-}
 
 
 
@@ -391,24 +376,21 @@ for(let i=1;i<data.length;i++){
 table.innerHTML+=`
 
 <tr>
-
 <td>${data[i][0]}</td>
 <td>${data[i][1]}</td>
 <td>${data[i][2]}</td>
 <td>${data[i][3]}</td>
 <td>${data[i][4]}</td>
 <td>${data[i][5]}</td>
-
 </tr>
 
 `;
 
 }
 
-setTimeout(
-filterDate,
-100
-);
+filterDate();
+
+}
 
 }
 function searchTable(){
@@ -447,6 +429,7 @@ row.style.display="none";
 
 
 
+
 function filterDate(){
 
 const month=
@@ -481,8 +464,8 @@ parts[1];
 
 const rowYear=
 String(
-Number(parts[2]) + 543
-).trim();
+Number(parts[2])+543
+);
 
 if(
 
@@ -508,18 +491,7 @@ row.style.display="none";
   
 loadProducts();
 
-const now=
-new Date();
 
-const currentMonth=
-String(
-now.getMonth()+1
-).padStart(2,"0");
-
-const currentYear=
-String(
-now.getFullYear()+543
-);
 
 document.getElementById(
 "monthFilter"
@@ -572,26 +544,7 @@ document
 filterDate
 );
 
-  document
-.getElementById("monthFilter")
-.addEventListener(
-"change",
-filterDate
-);
-
-document
-.getElementById("yearFilter")
-.addEventListener(
-"change",
-filterDate
-);
-
-document
-.getElementById("search")
-.addEventListener(
-"keyup",
-searchTable
-);
+ 
 
 </script>
 
