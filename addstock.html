@@ -150,11 +150,62 @@ onclick="saveStock()">
 
   <div style="
 display:flex;
-justify-content:space-between;
 align-items:center;
+gap:15px;
 margin:15px 0;
-flex-wrap:wrap;
+flex-wrap:nowrap;
 ">
+
+<div>
+
+📅 เดือน:
+
+<select id="monthFilter">
+
+<option value="">ทั้งหมด</option>
+<option value="01">มกราคม</option>
+<option value="02">กุมภาพันธ์</option>
+<option value="03">มีนาคม</option>
+<option value="04">เมษายน</option>
+<option value="05">พฤษภาคม</option>
+<option value="06">มิถุนายน</option>
+<option value="07">กรกฎาคม</option>
+<option value="08">สิงหาคม</option>
+<option value="09">กันยายน</option>
+<option value="10">ตุลาคม</option>
+<option value="11">พฤศจิกายน</option>
+<option value="12">ธันวาคม</option>
+
+</select>
+
+</div>
+
+<div>
+
+📆 ปี:
+
+<select id="yearFilter">
+
+<option value="">ทั้งหมด</option>
+<option value="2569">2569</option>
+<option value="2570">2570</option>
+<option value="2571">2571</option>
+
+</select>
+
+</div>
+
+<input
+type="text"
+id="search"
+placeholder="🔍 ค้นหารหัส หรือ ชื่อ สป."
+style="
+width:300px;
+padding:8px;
+margin-left:auto;
+">
+
+</div>
 
 <div>
 
@@ -494,6 +545,27 @@ row.style.display="none";
   
 loadProducts();
 loadHistory();
+
+const now=
+new Date();
+
+const currentMonth=
+String(
+now.getMonth()+1
+).padStart(2,"0");
+
+const currentYear=
+String(
+now.getFullYear()+543
+);
+
+document.getElementById(
+"monthFilter"
+).value=currentMonth;
+
+document.getElementById(
+"yearFilter"
+).value=currentYear;
 
 document
 .getElementById("search")
