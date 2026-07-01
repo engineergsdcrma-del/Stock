@@ -240,7 +240,8 @@ const API=
 "https://script.google.com/macros/s/AKfycbzY5rcaEq3kviu0iglxS61jAiCgNAuRrUcpwpzVuxkKYjLQkFXSL63YcO6-QUiWap0l/exec";
 let isSaving=false;
 
-async function loadProducts(){
+
+    async function loadProducts(){
 
 const res=
 await fetch(
@@ -253,8 +254,26 @@ await res.json();
 const select=
 document.getElementById("code");
 
+select.innerHTML=
+`
+<option value="">
+-- เลือกรหัสสินค้า --
+</option>
+`;
 
+for(let i=1;i<data.length;i++){
 
+select.innerHTML+=`
+
+<option value="${data[i][0]}">
+${data[i][0]} - ${data[i][1]}
+</option>
+
+`;
+
+}
+
+}
 
 
 async function saveStock(){
@@ -367,7 +386,9 @@ const data=
 await res.json();
 
 const table=
-document.getElementById("history");
+document.getElementById(
+"history"
+);
 
 table.innerHTML="";
 
@@ -388,18 +409,34 @@ table.innerHTML+=`
 
 }
 
-filterDate();
+filterTable();
 
 }
 
-}
-function searchTable(){
+  
+function filterTable(){
 
 const keyword=
 document
-.getElementById("search")
+.getElementById(
+"search"
+)
 .value
 .toLowerCase();
+
+const month=
+document
+.getElementById(
+"monthFilter"
+)
+.value;
+
+const year=
+document
+.getElementById(
+"yearFilter"
+)
+.value;
 
 const rows=
 document.querySelectorAll(
@@ -409,45 +446,8 @@ document.querySelectorAll(
 rows.forEach(function(row){
 
 const text=
-row.innerText.toLowerCase();
-
-if(
-text.includes(keyword)
-){
-
-row.style.display="";
-
-}else{
-
-row.style.display="none";
-
-}
-
-});
-
-}
-
-
-
-
-function filterDate(){
-
-const month=
-document
-.getElementById("monthFilter")
-.value;
-
-const year=
-document
-.getElementById("yearFilter")
-.value;
-
-const rows=
-document.querySelectorAll(
-"#history tr"
-);
-
-rows.forEach(function(row){
+row.innerText
+.toLowerCase();
 
 const date=
 row.cells[0]
@@ -467,48 +467,40 @@ String(
 Number(parts[2])+543
 );
 
-if(
+const matchKeyword=
+text.includes(
+keyword
+);
+
+const matchDate=
 
 (month==="" || rowMonth===month)
 
 &&
 
-(year==="" || rowYear===year)
+(year==="" || rowYear===year);
 
-){
+row.style.display=
 
-row.style.display="";
+(matchKeyword && matchDate)
 
-}else{
+? ""
 
-row.style.display="none";
-
-}
+: "none";
 
 });
 
 }
-  
-loadProducts();
-
-
-
-document.getElementById(
-"monthFilter"
-).value=currentMonth;
-
-document.getElementById(
-"yearFilter"
-).value=currentYear;
-
-loadHistory();
 const now=
 new Date();
 
 const currentMonth=
 String(
 now.getMonth()+1
-).padStart(2,"0");
+).padStart(
+2,
+"0"
+);
 
 const currentYear=
 String(
@@ -517,35 +509,44 @@ now.getFullYear()+543
 
 document.getElementById(
 "monthFilter"
-).value=currentMonth;
+).value=
+currentMonth;
 
 document.getElementById(
 "yearFilter"
-).value=currentYear;
+).value=
+currentYear;
+
+loadProducts();
+
+loadHistory();
 
 document
-.getElementById("search")
+.getElementById(
+"search"
+)
 .addEventListener(
 "keyup",
-searchTable
+filterTable
 );
 
 document
-.getElementById("monthFilter")
+.getElementById(
+"monthFilter"
+)
 .addEventListener(
 "change",
-filterDate
+filterTable
 );
 
 document
-.getElementById("yearFilter")
+.getElementById(
+"yearFilter"
+)
 .addEventListener(
 "change",
-filterDate
+filterTable
 );
-
- 
-
 </script>
 
 </body>
