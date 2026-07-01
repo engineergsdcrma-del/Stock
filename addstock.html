@@ -250,18 +250,25 @@ API+"?type=products"
 const data=
 await res.json();
 
-async function loadProducts(){
-
-const res=
-await fetch(
-API+"?type=products"
-);
-
-const data=
-await res.json();
-
 const select=
 document.getElementById("code");
+
+for(let i=1;i<data.length;i++){
+
+select.innerHTML += `
+
+<option value="${data[i][0]}">
+
+${data[i][0]} -
+${data[i][1]}
+
+</option>
+
+`;
+
+}
+
+}
 
 for(let i=1;i<data.length;i++){
 
@@ -475,7 +482,8 @@ rows.forEach(function(row){
 
 const date=
 row.cells[0]
-.textContent;
+.textContent
+.trim();
 
 const parts=
 date.split("/");
@@ -536,8 +544,6 @@ document.getElementById(
 "yearFilter"
 ).value=currentYear;
 
-filterDate();
-
 document
 .getElementById("search")
 .addEventListener(
@@ -545,6 +551,19 @@ document
 searchTable
 );
 
+document
+.getElementById("monthFilter")
+.addEventListener(
+"change",
+filterDate
+);
+
+document
+.getElementById("yearFilter")
+.addEventListener(
+"change",
+filterDate
+);
 
 
 </script>
