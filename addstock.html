@@ -412,7 +412,14 @@ table.innerHTML+=`
 filterTable();
 
 }
+const now = new Date();
 
+const currentMonth =
+String(now.getMonth()+1)
+.padStart(2,"0");
+
+const currentYear =
+String(now.getFullYear()+543);
   
 function filterTable(){
 
@@ -472,11 +479,7 @@ text.includes(
 keyword
 );
   
-const now = new Date();
 
-const currentMonth = String(now.getMonth() + 1).padStart(2, "0");
-
-const currentYear = String(now.getFullYear() + 543);
 const matchDate=
 
 (month==="" || rowMonth===month)
@@ -498,20 +501,13 @@ row.style.display=
 }
 
 
-
-document.getElementById("monthFilter").value = currentMonth;
-document.getElementById("yearFilter").value = currentYear;
-  
-
-document.getElementById(
+  document.getElementById(
 "monthFilter"
-).value=
-currentMonth;
+).value=currentMonth;
 
 document.getElementById(
 "yearFilter"
-).value=
-currentYear;
+).value=currentYear;
 
 loadProducts();
 
