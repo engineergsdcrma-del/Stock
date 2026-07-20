@@ -510,94 +510,69 @@ showItems();
   
 async function loadData(){
 
-const response =
-await fetch(API);
+  const response = await fetch(API);
+  const data = await response.json();
 
-const data =
-await response.json();
+  let head = "<tr>";
 
-let head = "<tr>";
+  data[0].forEach(col => {
+    head += `<th>${col}</th>`;
+  });
 
-data[0].forEach(col=>{
+  head += "<th>จัดการ</th>";
+  head += "</tr>";
 
-head += `<th>${col}</th>`;
+  document.querySelector("#stockTable thead").innerHTML = head;
 
-});
-  
-head += "<th>จัดการ</th>";
-  
-head += "</tr>";
+  let rows = "";
 
-document.querySelector(
-"#stockTable thead"
-).innerHTML = head;
+  for(let i = 1; i < data.length; i++){
 
-let rows = "";
+    rows += `<tr data-row="${i+1}">`;
 
-for(let i=1;i<data.length;i++){
+    data[i].forEach(col => {
+      rows += `<td>${col}</td>`;
+    });
 
-rows += `<tr data-row="${i+1}">`;
+    rows += `
+    <td>
+      <button onclick="editRow(this)">✏️ แก้ไข</button>
+    </td>
+    `;
 
-data[i].forEach(col=>{
+    rows += "</tr>";
 
-rows += `<td>${col}</td>`;
+  }
 
-});
+  document.querySelector("#stockTable tbody").innerHTML = rows;
 
-rows += `
-<td>
-<button onclick="editRow(this)">
-✏️ แก้ไข
-</button>
-</td>
-`;
-  
-rows += "</tr>";
+  // เปลี่ยนสีตามวันที่
+  const tableRows = document.querySelectorAll("#stockTable tbody tr");
 
-}
+  let lastDate = "";
+  let colorIndex = 0;
 
-document.querySelector(
-"#stockTable tbody"
-).innerHTML = rows;
+  tableRows.forEach(function(row){
 
-// เปลี่ยนสีตามวันที่
-const tableRows =
-document.querySelectorAll(
-"#stockTable tbody tr"
-);
+    if(!row.cells[1]) return;
 
-let lastDate="";
-let colorIndex=0;
+    const currentDate = row.cells[1].textContent.trim();
 
-tableRows.forEach(function(row){
+    if(currentDate !== lastDate){
+      colorIndex++;
+      lastDate = currentDate;
+    }
 
-const currentDate =
-row.cells[1]
-.textContent.trim();
+    if(colorIndex % 2 === 0){
+      row.style.background = "#f1f7ff";
+    }else{
+      row.style.background = "#ffffff";
+    }
 
-if(currentDate!==lastDate){
+  });
 
-colorIndex++;
-lastDate=currentDate;
-
-}
-
-if(colorIndex%2===0){
-
-row.style.background =
-"#f1f7ff";
-
-}else{
-
-row.style.background =
-"#ffffff";
-
-}
-
-});
-
-// กรองเดือน/ปีหลังโหลดเสร็จ
-filterDate();
+  // กรองเดือน/ปีหลังโหลดเสร็จ
+  filterDate();
 
 }
 
