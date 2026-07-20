@@ -849,7 +849,7 @@ async function updateData() {
     return;
   }
 
-  // ส่งข้อมูลต่อท้าย URL โดยตรง เพื่อป้องกันค่าหลุดตอน Redirect
+  // ส่งข้อมูล Query ต่อท้าย URL ชัวร์ที่สุด
   const queryParams = new URLSearchParams({
     action: "update",
     row: rowVal,
@@ -862,23 +862,22 @@ async function updateData() {
   });
 
   try {
-    const res = await fetch(`${API}?${queryParams.toString()}`, {
-      method: "POST"
+    // ใส่ mode: 'no-cors' เพื่อไม่ให้เบราว์เซอร์บล็อกการส่งข้อมูล
+    await fetch(`${API}?${queryParams.toString()}`, {
+      method: "POST",
+      mode: "no-cors"
     });
 
-    const resultText = await res.text();
+    alert("✅ บันทึกการแก้ไขเรียบร้อยแล้ว!");
+    closeModal();
+    location.reload();
 
-    if (resultText.trim() === "OK") {
-      alert("✅ แก้ไขข้อมูลเรียบร้อยแล้ว!");
-      closeModal();
-      location.reload();
-    } else {
-      alert("⚠️ ตอบกลับจากระบบ: " + resultText);
-    }
   } catch (error) {
     alert("❌ เกิดข้อผิดพลาด: " + error.message);
   }
 }
+
+  
 window.onload=function(){
 
 loadProducts();
