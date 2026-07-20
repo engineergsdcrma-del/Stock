@@ -147,6 +147,36 @@ transition:.2s;
 
 }
 
+  .modal{
+
+display:none;
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+
+}
+
+.modal-content{
+
+background:#fff;
+width:400px;
+padding:20px;
+margin:80px auto;
+border-radius:12px;
+
+}
+
+.modal input{
+
+width:100%;
+padding:8px;
+margin-top:5px;
+
+}
+
 </style>
 
 </head>
@@ -805,17 +835,27 @@ function editRow(index){
 const row =
 document.querySelectorAll("#stockTable tbody tr")[index-1];
 
-document.getElementById("code").value =
+// เก็บลำดับแถว
+document.getElementById("editRow").value = index;
+
+// ใส่ข้อมูลลงใน Pop-up
+document.getElementById("editCode").value =
 row.cells[3].innerText;
 
-document.getElementById("qty").value =
+document.getElementById("editName").value =
+row.cells[4].innerText;
+
+document.getElementById("editQty").value =
 row.cells[5].innerText;
 
-document.getElementById("user").value =
+document.getElementById("editUser").value =
 row.cells[7].innerText;
 
-document.getElementById("place").value =
+document.getElementById("editPlace").value =
 row.cells[8].innerText;
+
+// เปิด Pop-up
+document.getElementById("editModal").style.display = "block";
 
 }
   
@@ -832,6 +872,36 @@ loadData();
 
 
 </script>
+<!-- Modal แก้ไข -->
+<div id="editModal" class="modal">
 
+<div class="modal-content">
+
+<h3>✏️ แก้ไขรายการเบิก</h3>
+
+<input type="hidden" id="editRow">
+
+<label>รหัสสป.</label><br>
+<input id="editCode" readonly><br><br>
+
+<label>ชื่อสป.</label><br>
+<input id="editName" readonly><br><br>
+
+<label>จำนวน</label><br>
+<input id="editQty"><br><br>
+
+<label>ผู้เบิก</label><br>
+<input id="editUser"><br><br>
+
+<label>นำไปใช้ที่ไหน</label><br>
+<input id="editPlace"><br><br>
+
+<button onclick="updateData()">💾 บันทึก</button>
+
+<button onclick="closeModal()">❌ ยกเลิก</button>
+
+</div>
+
+</div>
 </body>
 </html>
