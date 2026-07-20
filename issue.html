@@ -492,7 +492,9 @@ data[0].forEach(col=>{
 head += `<th>${col}</th>`;
 
 });
-
+  
+head += "<th>จัดการ</th>";
+  
 head += "</tr>";
 
 document.querySelector(
@@ -511,6 +513,14 @@ rows += `<td>${col}</td>`;
 
 });
 
+rows += `
+<td>
+<button onclick="editRow(${i})">
+✏️ แก้ไข
+</button>
+</td>
+`;
+  
 rows += "</tr>";
 
 }
@@ -789,6 +799,26 @@ filterDate
 
 
 // โหลดครั้งแรก
+
+function editRow(index){
+
+const row =
+document.querySelectorAll("#stockTable tbody tr")[index-1];
+
+document.getElementById("code").value =
+row.cells[3].innerText;
+
+document.getElementById("qty").value =
+row.cells[5].innerText;
+
+document.getElementById("user").value =
+row.cells[7].innerText;
+
+document.getElementById("place").value =
+row.cells[8].innerText;
+
+}
+  
 window.onload=function(){
 
 loadProducts();
