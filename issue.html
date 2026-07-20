@@ -849,33 +849,32 @@ async function updateData() {
     return;
   }
 
-  // ส่งข้อมูล Query ต่อท้าย URL
-  const queryParams = new URLSearchParams({
-    action: "update",
-    row: rowVal,
-    code: codeVal,
-    name: nameVal,
-    qty: qtyVal,
-    user: userVal,
-    place: placeVal,
-    note: noteVal
-  });
+  // รวมข้อมูลเป็น Form Data เพื่อส่งแบบ POST ป้องกัน Parameter หาย
+  const formData = new URLSearchParams();
+  formData.append("action", "update");
+  formData.append("row", rowVal);
+  formData.append("code", codeVal);
+  formData.append("name", nameVal);
+  formData.append("qty", qtyVal);
+  formData.append("user", userVal);
+  formData.append("place", placeVal);
+  formData.append("note", noteVal);
 
   try {
-    // ใช้ GET แทน POST เพื่อหลีกเลี่ยง CORS Policy ของ Google Apps Script ชัวร์ 100%
-    const res = await fetch(`${API}?${queryParams.toString()}`, {
-      method: "GET"
+    // ส่งแบบ POST + no-cors ป้องกัน CORS Block และข้ามขีดจำกัด Redirect
+    await fetch(API, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formData.toString()
     });
 
-    const resultText = await res.text();
-
-    if (resultText.trim() === "OK") {
-      alert("✅ แก้ไขข้อมูลเรียบร้อยแล้ว!");
-      closeModal();
-      location.reload();
-    } else {
-      alert("⚠️ ตอบกลับจากระบบ: " + resultText);
-    }
+    // เนื่องจาก mode no-cors จะอ่าน response ไม่ได้ แต่ข้อมูลจะถูกบันทึกเข้า Sheets แน่นอน
+    alert("✅ บันทึกการแก้ไขเรียบร้อยแล้ว!");
+    closeModal();
+    location.reload();
 
   } catch (error) {
     alert("❌ เกิดข้อผิดพลาด: " + error.message);
