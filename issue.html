@@ -835,42 +835,51 @@ document.getElementById("editModal").style.display="none";
 
 }
 
-async function updateData(){
+async function updateData() {
+  const rowVal   = document.getElementById("editRow").value;
+  const codeVal  = document.getElementById("editCode").value;
+  const nameVal  = document.getElementById("editName").value;
+  const qtyVal   = document.getElementById("editQty").value;
+  const userVal  = document.getElementById("editUser").value;
+  const placeVal = document.getElementById("editPlace").value;
+  const noteVal  = document.getElementById("editNote").value;
 
-  const noteVal = document.getElementById("editNote").value;
-
-  // ส่งข้อมูลแบบ URLSearchParams เพื่อให้ส่งค่า note ผ่าน mode: "no-cors" ได้
-  const formData = new URLSearchParams();
-  formData.append("action", "update");
-  formData.append("row", document.getElementById("editRow").value);
-  formData.append("code", document.getElementById("editCode").value);
-  formData.append("name", document.getElementById("editName").value);
-  formData.append("qty", document.getElementById("editQty").value);
-  formData.append("user", document.getElementById("editUser").value);
-  formData.append("place", document.getElementById("editPlace").value);
-  formData.append("note", noteVal);
-
-  try {
-    await fetch(API, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formData.toString()
-    });
-
-    alert("แก้ไขข้อมูลเรียบร้อยแล้ว");
-    closeModal();
-    location.reload();
-  } catch (error) {
-    alert("เกิดข้อผิดพลาดในการบันทึก");
-    console.error(error);
+  if (!rowVal) {
+    alert("❌ ไม่พบเลขบรรทัดที่จะแก้ไข");
+    return;
   }
 
+  const payload = {
+    action: "update",
+    row: rowVal,
+    code: codeVal,
+    name: nameVal,
+    qty: qtyVal,
+    user: userVal,
+    place: placeVal,
+    note: noteVal
+  };
+
+  try {
+    const res = await fetch(API, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    const resultText = await res.text();
+
+    if (resultText.trim() === "OK") {
+      alert("✅ แก้ไขข้อมูลเรียบร้อยแล้ว!");
+      closeModal();
+      location.reload();
+    } else {
+      alert("⚠️ เซิร์ฟเวอร์ตอบกลับว่า: " + resultText);
+    }
+  } catch (error) {
+    alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: " + error.message);
+    console.error(error);
+  }
 }
-
-
 
 window.onload=function(){
 
