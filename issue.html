@@ -545,7 +545,7 @@ rows += `<td>${col}</td>`;
 
 rows += `
 <td>
-<button onclick="editRow(${i})">
+<button onclick="editRow(this)">
 ✏️ แก้ไข
 </button>
 </td>
@@ -830,34 +830,48 @@ filterDate
 
 // โหลดครั้งแรก
 
-function editRow(index){
+function editRow(btn){
 
 const row =
-document.querySelectorAll("#stockTable tbody tr")[index-1];
+btn.closest("tr");
 
-// เก็บลำดับแถว
-document.getElementById("editRow").value = row.dataset.row;
 
-// ใส่ข้อมูลลงใน Pop-up
+// เก็บเลขแถวจริงใน Google Sheet
+document.getElementById("editRow").value =
+row.dataset.row;
+
+
+// รหัส
 document.getElementById("editCode").value =
 row.cells[3].innerText;
 
+
+// ชื่อ
 document.getElementById("editName").value =
 row.cells[4].innerText;
 
+
+// จำนวน
 document.getElementById("editQty").value =
 row.cells[5].innerText;
 
+
+// ผู้เบิก
 document.getElementById("editUser").value =
 row.cells[7].innerText;
 
+
+// สถานที่
 document.getElementById("editPlace").value =
 row.cells[8].innerText;
 
+
+// ล้างหมายเหตุ
 document.getElementById("editNote").value="";
-  
-// เปิด Pop-up
-document.getElementById("editModal").style.display = "block";
+
+
+// เปิดหน้าต่างแก้ไข
+document.getElementById("editModal").style.display="block";
 
 }
 
@@ -921,28 +935,7 @@ location.reload();
 }
 
 
-console.log(data);
 
-
-await fetch(API,{
-
-method:"POST",
-
-mode:"no-cors",
-
-body:JSON.stringify(data)
-
-});
-
-
-alert("ส่งข้อมูลแล้ว");
-
-
-closeModal();
-
-
-}
-  
 window.onload=function(){
 
 loadProducts();
