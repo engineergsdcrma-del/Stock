@@ -864,16 +864,17 @@ async function updateData() {
 
   try {
     // ใช้ GET + no-cors จะส่ง Parameter ผ่าน URL เข้า Google Apps Script ได้ 100% โดยไม่โดนบล็อก
-    await fetch(`${API}?${queryParams.toString()}`, {
-      method: "GET",
-      mode: "no-cors"
-    });
+   const res = await fetch(`${API}?${queryParams.toString()}`);
 
-    alert("✅ บันทึกการแก้ไขเรียบร้อยแล้ว!");
-    closeModal();
-    
-    // บังคับรีโหลดหน้าเว็บแบบล้างแคช
-    location.href = location.pathname + "?refresh=" + new Date().getTime();
+const txt = await res.text();
+
+if (txt.trim() === "OK") {
+  alert("✅ บันทึกการแก้ไขเรียบร้อยแล้ว!");
+  closeModal();
+  location.reload();
+} else {
+  alert("❌ บันทึกไม่สำเร็จ: " + txt);
+}
 
   } catch (error) {
     alert("❌ เกิดข้อผิดพลาด: " + error.message);
