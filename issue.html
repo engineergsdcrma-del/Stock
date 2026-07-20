@@ -884,54 +884,36 @@ document.getElementById("editModal").style.display="none";
 
 async function updateData(){
 
-const data = {
+  const noteVal = document.getElementById("editNote").value;
 
-action:"update",
+  // ส่งข้อมูลแบบ URLSearchParams เพื่อให้ส่งค่า note ผ่าน mode: "no-cors" ได้
+  const formData = new URLSearchParams();
+  formData.append("action", "update");
+  formData.append("row", document.getElementById("editRow").value);
+  formData.append("code", document.getElementById("editCode").value);
+  formData.append("name", document.getElementById("editName").value);
+  formData.append("qty", document.getElementById("editQty").value);
+  formData.append("user", document.getElementById("editUser").value);
+  formData.append("place", document.getElementById("editPlace").value);
+  formData.append("note", noteVal);
 
-row:
-document.getElementById("editRow").value,
+  try {
+    await fetch(API, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formData.toString()
+    });
 
-code:
-document.getElementById("editCode").value,
-
-name:
-document.getElementById("editName").value,
-
-qty:
-document.getElementById("editQty").value,
-
-user:
-document.getElementById("editUser").value,
-
-place:
-document.getElementById("editPlace").value,
-
-note:
-document.getElementById("editNote").value
-
-};
-
-
-console.log(data);
-
-
-await fetch(API,{
-
-method:"POST",
-
-mode:"no-cors",
-
-body:JSON.stringify(data)
-
-});
-
-
-alert("แก้ไขข้อมูลแล้ว");
-
-
-closeModal();
-
-location.reload();
+    alert("แก้ไขข้อมูลเรียบร้อยแล้ว");
+    closeModal();
+    location.reload();
+  } catch (error) {
+    alert("เกิดข้อผิดพลาดในการบันทึก");
+    console.error(error);
+  }
 
 }
 
