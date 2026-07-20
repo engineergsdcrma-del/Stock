@@ -865,11 +865,55 @@ document.getElementById("editModal").style.display="none";
 
 }
 
-function updateData(){
+async function updateData(){
 
-alert("กดบันทึกแล้ว");
+const row =
+document.getElementById("editRow").value;
+
+
+const data = {
+
+action:"update",
+
+row:row,
+
+code:
+document.getElementById("editCode").value,
+
+name:
+document.getElementById("editName").value,
+
+qty:
+document.getElementById("editQty").value,
+
+user:
+document.getElementById("editUser").value,
+
+place:
+document.getElementById("editPlace").value
+
+};
+
+
+console.log(data);
+
+
+await fetch(API,{
+
+method:"POST",
+
+mode:"no-cors",
+
+body:JSON.stringify(data)
+
+});
+
+
+alert("ส่งข้อมูลแล้ว");
+
 
 closeModal();
+
 
 }
   
