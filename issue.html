@@ -849,8 +849,8 @@ async function updateData() {
     return;
   }
 
-  // ส่งข้อมูล JSON พร้อมระบุ action: "update" ชัดเจน
-  const payload = {
+  // ส่งข้อมูลต่อท้าย URL โดยตรง เพื่อป้องกันค่าหลุดตอน Redirect
+  const queryParams = new URLSearchParams({
     action: "update",
     row: rowVal,
     code: codeVal,
@@ -859,12 +859,11 @@ async function updateData() {
     user: userVal,
     place: placeVal,
     note: noteVal
-  };
+  });
 
   try {
-    const res = await fetch(API, {
-      method: "POST",
-      body: JSON.stringify(payload)
+    const res = await fetch(`${API}?${queryParams.toString()}`, {
+      method: "POST"
     });
 
     const resultText = await res.text();
@@ -880,7 +879,6 @@ async function updateData() {
     alert("❌ เกิดข้อผิดพลาด: " + error.message);
   }
 }
-
 window.onload=function(){
 
 loadProducts();
