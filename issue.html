@@ -849,6 +849,7 @@ async function updateData() {
     return;
   }
 
+  // ส่งข้อมูล JSON พร้อมระบุ action: "update" ชัดเจน
   const payload = {
     action: "update",
     row: rowVal,
@@ -873,11 +874,10 @@ async function updateData() {
       closeModal();
       location.reload();
     } else {
-      alert("⚠️ เซิร์ฟเวอร์ตอบกลับว่า: " + resultText);
+      alert("⚠️ ตอบกลับจากระบบ: " + resultText);
     }
   } catch (error) {
-    alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: " + error.message);
-    console.error(error);
+    alert("❌ เกิดข้อผิดพลาด: " + error.message);
   }
 }
 
